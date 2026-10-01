@@ -1,0 +1,99 @@
+\chapter{Methodology}
+\label{ch:methodology}
+
+The empirical analysis has two stages. In the \emph{clustering stage}, each season is clustered separately with a robust fuzzy $C$-medoids model for mixed-type data, the archetypes are aligned across seasons, and membership transitions are computed. In the \emph{valuation stage}, the change in log market value is related to the transitions, controlling for the determinants of value. This chapter describes both stages, the inference that accounts for the use of estimated memberships, and the design of the robustness and sensitivity analyses.
+
+A main configuration was fixed before the valuation stage was estimated: shrunk success rates, $K=4$ archetypes, fuzziness $m=1.3$ and noise multiplier $\rho=1.0$. The choice of $K$ rests on clustering diagnostics only (Section~\ref{sec:results-selection}), $m=1.3$ is the value of \citeA{durso2022robust}, and $\rho$ was calibrated to the noise share (Section~\ref{sec:method-noise}). All other configurations are reported as sensitivity analyses and are never used to replace the main one. The proposal envisaged selecting $K$ and $m$ with the Xie--Beni index. For $m$ this was not done, because the index is not a reliable guide to the fuzziness exponent. Across the specifications examined, its median falls from 1.06 at $m=1.3$ to 1.03, 0.96 and 0.71 at $m=1.4$, $1.5$ and $2.0$, in line with the near-uniform memberships that large exponents produce. The published value was therefore adopted. Within the main configuration the index happens to be lowest at $m=1.4$ among the values from 1.2 to 1.5, and the dependence of the results on $m$ turns out to matter. Chapter~\ref{ch:robustness} reports it in full.
+
+\section{Stage 1: robust fuzzy $C$-medoids for mixed data}
+\label{sec:method-model}
+
+\subsection{Dissimilarities}
+
+A player-season $i$ has three groups of attributes: performance statistics ($s=1$), success rates ($s=2$) and positions ($s=3$), with $n_1=10$, $n_2=2$ and $n_3=3$ variables (Table~\ref{tab:variables}). For each group, a dissimilarity $d_s(i,j)$ is computed: the Manhattan distance for the two groups of scaled numerical variables, and the Jaccard dissimilarity for positions, which treats the labels as sets and counts two players with identical sets as identical. To make the groups comparable, each is divided by the standard deviation $\sigma_s$ of its pairwise dissimilarities over the pooled sample, $\mathrm{sd}_s(i,j)=d_s(i,j)/\sigma_s$, which is the standardisation of \citeA{akhanli2023clustering}. The constants $\sigma_s$ are computed once and kept fixed for all seasons. The overall squared dissimilarity combines the groups through weights $w_s$,
+\begin{equation}
+	d^2(i,j)=\sum_{s=1}^{3} w_s^{2}\,\mathrm{sd}_s(i,j)^2 .
+	\label{eq:dist}
+\end{equation}
+
+\subsection{Weights}
+
+In \citeA{durso2022robust} the weights are estimated within the optimisation, in inverse proportion to the dispersion of each group around the medoids. On the data of this thesis this failed in every variant that was tried. With the scaling by the maximum used in the original paper, the two success rates took 96 to 97\% of the weight with raw rates and 60 to 70\% with shrunk rates (with 21 to 34\% of the players in the noise cluster) for three and four clusters. With the scaling by the mean, positions took 76 to 90\% of the weight in three of the four runs with three or four clusters. With five clusters the weights collapsed onto the positions in all four variants, completely in three of them and to 90\% in the fourth, with a validity index of zero in three (2023/24 season; Appendix~\ref{app:weights}). The explanation is structural. The estimation rewards the group that is most compact around the medoids, and a group with few variables, or with few distinct values, is always more compact than ten continuous variables. The thesis therefore follows \citeA{akhanli2023clustering}, who fix the weights in advance in proportion to the number of variables of each group. Because \eqref{eq:dist} squares the weights, they are set proportional to $\sqrt{n_s}$ and normalised to sum to one, $w_s=\sqrt{n_s}/\sum_r\sqrt{n_r}$, so that the contribution of a group to $d^2$ is proportional to its number of variables. This gives $w=(0.501,\,0.224,\,0.275)$. Chapter~\ref{ch:robustness} reports the unsuccessful estimation of the weights as a result in itself.
+
+\subsection{Memberships, medoids and the noise cluster}
+\label{sec:method-noise}
+
+Let $K$ be the number of substantive clusters, with medoids $g_1,\dots,g_K$ that are player-seasons of the same season, and let $K+1$ denote the noise cluster. With $d_{ic}^2=d^2(i,g_c)$ and fuzziness exponent $m>1$, the clustering minimises
+\begin{equation}
+	J=\sum_{i=1}^{n}\sum_{c=1}^{K}u_{ic}^{m}\,d_{ic}^{2}+\sum_{i=1}^{n}u_{i,K+1}^{m}\,\delta^{2},
+	\qquad \sum_{c=1}^{K+1}u_{ic}=1,\ u_{ic}\ge 0,
+\end{equation}
+where $\delta^2$ is the squared distance of every observation to the noise cluster. For given medoids, the memberships are
+\begin{equation}
+	u_{ic}=\frac{\left(d_{ic}^{-2}\right)^{1/(m-1)}}{\sum_{l=1}^{K}\left(d_{il}^{-2}\right)^{1/(m-1)}+\left(\delta^{-2}\right)^{1/(m-1)}},
+	\qquad
+	u_{i,K+1}=\frac{\left(\delta^{-2}\right)^{1/(m-1)}}{\sum_{l=1}^{K}\left(d_{il}^{-2}\right)^{1/(m-1)}+\left(\delta^{-2}\right)^{1/(m-1)}},
+\end{equation}
+and the medoid of cluster $c$ is the player-season $h$ that minimises $\sum_i u_{ic}^{m}\,d^2(h,i)$. The algorithm alternates between the two updates until the medoids no longer change (at most 200 iterations). An observation whose distance to every medoid is larger than $\delta$ obtains most of its membership in the noise cluster. The noise distance is $\delta^{2}=\rho\cdot\frac{1}{nK}\sum_{i}\sum_{c}d_{ic}^{2}$, the average squared distance of all observations to all medoids multiplied by a constant $\rho$, which is the formulation of \citeA{dave1991noise}. The formulation printed in \citeA{durso2022robust} weights the average by $u_{ic}^m$. In test runs, that version led to degenerate solutions (in one setting 99\% of the players were assigned to the noise cluster), so the unweighted average is used. With it, $\rho=1.0$ gives a noise share of about 5\% at $K=4$ (the paper reports 12\%), and $\rho$ is varied in the sensitivity analysis.
+
+Each season is clustered with ten random starts, with initial medoids drawn in the manner of $k$-medoids++ (each new medoid is drawn with a probability that increases in its distance to the medoids already chosen), and the solution with the smallest value of $J$ is kept. The fuzziness exponent is $m=1.3$ in the main configuration. This value was selected by \citeA{durso2022robust} among 1.3, 1.5 and 2.0 and lies in the range recommended for medoid-based methods (Section~\ref{sec:lit-fuzzy}). Chapter~\ref{ch:robustness} examines the sensitivity of the results to it.
+
+\subsection{Number of clusters}
+\label{sec:method-K}
+
+The number of clusters has to be the same in all seasons for the archetypes to be aligned, so it is chosen once for all seasons and not season by season as in the original paper. Candidate values of $K$ from 3 to 6 are compared on the following diagnostics, each averaged over the seasons: an adaptation of the Xie--Beni index \cite{xie1991validity}, $XB=\sum_i\sum_{c\le K}u_{ic}^m d_{ic}^2\big/\bigl(n\min_{c\ne l}d^2(g_c,g_l)\bigr)$, with squared distances and the substantive clusters only; the share of players assigned to the noise cluster; the share of players whose largest substantive membership is at least $0.7$ (crispness); the stability of the solution across random starts, measured by the adjusted Rand index between the best solution and the other starts; the size of the smallest archetype; and three diagnostics of the alignment across seasons that are defined below. The Xie--Beni index alone is not decisive, because it is not monotone in $K$ and is used together with the other diagnostics.
+
+\section{Alignment across seasons}
+\label{sec:method-alignment}
+
+Because the seasons are clustered independently, the numbering of the clusters is arbitrary, and the clusters of season $t+1$ have to be matched to those of season $t$. The matching is an assignment problem, solved with the Hungarian algorithm \cite{kuhn1955hungarian}. What has to be specified is the cost of matching archetype $k$ of season $t$ with archetype $l$ of season $t+1$. The proposal used the distance between the medoids. This was tried first and turned out to be unreliable. A medoid is a single player, and when two archetypes have similar medoids the matching can swap their labels between seasons, which turns a whole season pair of memberships into spurious transitions. A check of all 120 clustering runs of the specification grid found consistent labels in every season pair in only 30\% of them (Section~\ref{sec:rob-alignment}). The matching therefore uses the \emph{profile} of each archetype instead: the membership-weighted mean, over all players of the season, of the twelve clustering variables and the three position indicators, each standardised over the pooled sample,
+\begin{equation}
+	\bar x_{k}^{(t)}=\frac{\sum_i u_{ik}^{(t)}\,x_i^{(t)}}{\sum_i u_{ik}^{(t)}},
+\end{equation}
+and the cost is the Manhattan distance between profiles, $C_{kl}=\lVert \bar x_{k}^{(t)}-\bar x_{l}^{(t+1)}\rVert_1$. A profile averages the information of every player in the archetype and is therefore far more stable than a single medoid. The one-to-one assignment that minimises the total cost is found for each pair of adjacent seasons, and the labels are propagated forward from the first season. The noise cluster is not aligned. The medoids are not used in the alignment, so the consistency of their positions across seasons is an independent check of it.
+
+Three properties of the alignment are recorded. The \emph{alignment distance} is the mean cost of the matched pairs, which is small if the same archetype exists in both seasons. A match is called \emph{ambiguous} if the second-best alternative for the same row or column has a cost within 10\% of the chosen match. The \emph{persistence} is the share of players observed in two consecutive seasons whose largest substantive membership remains in the same archetype. The independent clustering of the seasons ignores temporal dependence, which is a limitation relative to dynamic approaches (Section~\ref{sec:lit-gap}). In exchange, the model is simple to interpret and to compare with the cross-sectional literature.
+
+\section{Membership transitions}
+\label{sec:method-transitions}
+
+For a player observed in two consecutive seasons, the transition is $\Delta u_{it}=u_{i,t+1}-u_{it}$, with $K+1$ elements that sum to zero. Besides the vector, two scalar summaries are used: the size of the shift, $\lVert\Delta u_{it}\rVert_2$ over the substantive archetypes, and the change in the entropy of the membership vector, $\Delta H_{it}=H(u_{i,t+1})-H(u_{it})$ with $H(u)=-\sum_c u_c\ln u_c$. The first captures the size of the movement without its direction, the second whether the profile becomes more or less specialised.
+
+\section{Stage 2: valuation model}
+\label{sec:method-valuation}
+
+\subsection{Specification}
+
+The estimation sample consists of the season pairs described in Section~\ref{sec:data-values}. The outcome is $\Delta\ln V_{it}$. The baseline specification is
+\begin{equation}
+	\Delta\ln V_{it}=\alpha+z_{it}'\beta+\varepsilon_{it},
+\end{equation}
+and the extended specification adds the transitions,
+\begin{equation}
+	\Delta\ln V_{it}=\alpha+z_{it}'\beta+\Delta u_{it}'\theta+\varepsilon_{it},
+	\label{eq:extended}
+\end{equation}
+in which the element of $\Delta u_{it}$ of the reference archetype (the one with the largest average membership) is omitted, as explained in Section~\ref{sec:theory-hypothesis}. The \emph{core} controls $z_{it}$ are age and its square, the logarithm of minutes played and its change, indicators for defenders and forwards, the points per match of the team while the player is on the pitch and their change, an indicator for a change of club within the league, season-pair effects, and non-penalty goals and assists per 90 minutes in their level and change. The \emph{full} controls add the level and the change of the remaining ten statistics from which the memberships are built. Statistics are entered in the scaled form of Section~\ref{sec:data-variables}.
+
+\subsection{Tests and measures of explanatory power}
+
+The central test is whether $\theta=0$, and it is a Wald test of the block of coefficients with standard errors that are cluster-robust by player, because a player can contribute several pairs \cite{cameron2015practitioner}. Explanatory power is measured by the gain in the adjusted $R^2$ when the transitions are added, and by the gain in out-of-sample $R^2$ in repeated five-fold cross-validation in which all pairs of a player are in the same fold. The cross-validation is repeated 30 times with different splits. The out-of-sample gain is a diagnostic of predictive relevance and is not used as the test.
+
+\subsection{Fixed and random effects}
+
+Because the outcome is already a change in log value, player characteristics that are constant over time, such as the level of talent or reputation, are differenced out before any fixed effect is added. Player fixed effects in this model therefore absorb player-specific \emph{trends} in value, for example those of young players on a steep path. The model is estimated with player fixed effects and with random effects, and a Hausman test \cite{hausman1978specification} compares them. Since age increases by one year per season for every player, it is not identified together with player and season effects, and age and its square are left out of this comparison. Only players with at least two season pairs contribute to the fixed-effects estimates. The Hausman statistic is computed with non-robust covariance matrices, and the random-effects model without age is misspecified, so its rejection is reported but not interpreted.
+
+\section{Estimated regressors and the two-stage bootstrap}
+\label{sec:method-bootstrap}
+
+The memberships are estimated, and conventional standard errors in the second stage ignore this uncertainty \cite{pagan1984econometric}. To account for it, both stages are repeated on bootstrap samples \cite{efron1979bootstrap}. In each replication, players are drawn with replacement, with all seasons of a player drawn together. Each season of the resampled data is clustered again with the same model, $K$, $m$, $\rho$, weights and scaling constants and with ten random starts. The clusters are matched to the \emph{original} solution season by season with the Hungarian algorithm, using the distance between the profiles of the archetypes, so that each archetype keeps its meaning across replications. Finally, the transitions and the extended model are re-estimated. The standard error of each coefficient is the standard deviation of its 500 replicated estimates, and the block of coefficients is tested with a Wald statistic that uses the bootstrap covariance matrix. The bootstrap corrects the standard errors but not the attenuation of coefficients caused by noise in the memberships. In-sample $R^2$ gains computed on bootstrap samples are optimistic because duplicated observations are fitted closely, and they are not used.
+
+\section{Robustness and sensitivity design}
+\label{sec:method-robustness}
+
+The design of the robustness analyses follows the points where a choice has to be made. \emph{Sample and outcome variations} repeat the test for the main configuration with a winsorised outcome (1st and 99th percentiles), only players who did not change club, only non-zero changes of value, players with at least 500 minutes in both seasons, without the COVID-affected pairs (starting in 2019/20 and 2020/21), players aged up to 30, and without players whose noise membership exceeds one half. \emph{Alternative transition measures} replace the membership changes by the size of the shift and by the change in entropy. A \emph{specification grid} varies the rate variables (shrunk or raw), the number of clusters (3 to 6), the noise multiplier ($\rho\in\{0.75,1.0,1.5\}$) and the fuzziness ($m\in\{1.2,1.3,1.4,1.5,2.0\}$), which gives 120 specifications, each with a re-run of the clustering, the alignment and the tests. The bootstrap is applied to a selection of them. Finally, a \emph{principal component benchmark} replaces the membership changes by the changes of the first principal components of the same twelve statistics, with the same number of dimensions. In addition, because the clustering is stochastic, the whole first stage is repeated with 30 different random seeds for each fuzziness value, and the test is repeated each time, to measure the dependence of the result on the random draw. Because many specifications are examined, no single $p$-value is read in isolation. The pattern across specifications is what is reported, and the main configuration remains the pre-specified result.
+
+\section{Implementation}
+\label{sec:method-implementation}
+
+All analyses are implemented in Python. The clustering model is implemented from scratch following \citeA{durso2022robust}, because no library provides it. The assignment problem is solved with \texttt{scipy}, the regressions with \texttt{statsmodels} and \texttt{linearmodels}, the cross-validation with \texttt{numpy}, and the bootstrap is parallelised with \texttt{joblib}. All random numbers are generated from fixed seeds.
