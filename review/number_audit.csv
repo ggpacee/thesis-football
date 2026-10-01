@@ -1,0 +1,99 @@
+location,claim,value_in_text,source_file,value_in_source,status
+Ch1 p1; Ch2 s2.1,2019 international transfers and spending (attributed to Franceschi et al. 2024),"18,080 players; USD 7.35 billion",docs/ (Franceschi et al. 2024) - not available,-,UNVERIFIABLE (docs/ absent). Also 'players moved' vs 'transfers': a count of transfers is not a count of players; check wording against the paper
+Ch1 s1.2; Ch6 s6.3; Ch8; Ch9,Share of players keeping their archetype,75%,analysis/clustering/select_K_summary.csv (persist shrunk K4),0.7496,OK
+Ch2 s2.1,"Franceschi et al.: 29 studies, 111 specifications, six categories; age linear + in 32/45, squared - in 41/45",29; 111; 6; 32/45; 41/45,docs/ - not available,-,UNVERIFIABLE
+Ch2 s2.1,"Muller et al.: 4,217 players, top five leagues, six seasons; TM updates every 6-12 months; crowd weaker for small leagues","4,217; 6; 6-12 months",docs/ - not available,-,UNVERIFIABLE
+Ch2 s2.1,"Poli et al.: 8,389 transfers, R2 84.8%","8,389; 84.8%",docs/ - not available,-,UNVERIFIABLE
+Ch2 s2.2,Bezdek et al.: convergence in 10-25 iterations,10-25,docs/ - not available,-,UNVERIFIABLE
+Ch2 s2.3,"Behravan et al.: ~93,000 objects, ~4,900 matches","93,000; 4,900",docs/ - not available,-,UNVERIFIABLE
+Ch2 s2.3,"Akhanli & Hennig: 2014-15, eight leagues, 3,003 players, 1,501 outfield analysed, 13 experts, 100-150 clusters, 5-cluster coarse solution","3,003; 1,501; 13; 100-150; 5",docs/ - not available,-,UNVERIFIABLE
+Ch2 s2.3; Ch6 s6.1,"D'Urso et al.: Serie A 2018/19, WhoScored, 397 of 544 players with >=200 min, 3 clusters + noise of 49 players, m=1.3; noise share 12%",397/544; 49; 1.3; 12%,docs/ - not available,49/397 = 12.3% (internally consistent),UNVERIFIABLE (internally consistent)
+Ch2 s2.3,"Pacifico: 27 players, 2012/13-2023/24, 35 variables, two profiles",27; 12 seasons; 35,docs/ - not available,-,UNVERIFIABLE
+Ch3 s3.5,Memberships constructed from twelve performance statistics,12 statistics,analysis/align_and_select.py l.76-84; fcmd_mdnc.py,12 statistics + 3 position indicators (weight 0.275),WRONG (incomplete: positions omitted; see Critical issue C2)
+Ch4 s4.1,FBref club-level rows; distinct names,"4,463; 2,008",analysis/logs/build_panel_output.txt,"4,463; 2,008",OK
+Ch4 Table 4.1,Same-name rows removed,"22 rows, 4 groups; 4,441",logs/build_panel_output.txt,22 rows in 4 groups,OK
+Ch4 s4.2,"Same-name pair with 22,152 minutes","22,152","analysis/fbref_all_seasons.csv (Joao Mendes, Vit. Guimaraes 2024/25, born 2000, 8 rows)","22,152",OK
+Ch4 Table 4.1,After merging multi-club rows; multi-club player-seasons,"4,364; 77",logs/build_panel_output.txt,"4,364; 77",OK
+Ch4 Table 4.1,"Merged player-season >3,100 min removed","1 (4,363)",logs/build_panel_output.txt,"1 (Vitinha 2021/22, 3,724 min)",OK
+Ch4 Table 4.1,Goalkeepers removed,"354 (4,009)",logs/build_panel_output.txt,354,OK
+Ch4 Table 4.1,<200 minutes removed,"808 (3,201)",logs/build_panel_output.txt,808,OK
+Ch4 Table 4.1,Missing shooting/misc stats (all 2017/18),"9 (3,192)",logs/build_panel_output.txt,"9, all season 1718",OK
+Ch4 s4.2; Ch9,Final sample,"3,192 player-seasons; 1,499 players",logs/make_analysis_panel_output.txt,"3,192; 1,499",OK
+Ch4 s4.2,Range per season,384-415,logs/build_panel_output.txt,384-415,OK
+Ch4 s4.2,Seasons per player,2.1,"3,192/1,499",2.13,OK
+Ch4 s4.2,Players in >=2 seasons,more than 800,logs/build_panel_output.txt,"812 (on 1,500 name+birth keys)",OK
+Ch4 s4.1,Clubs per season on TM squad lists,18,analysis/tm_out/tm_squads.csv,18 in every season,OK
+Ch4 s4.3,Five position combinations account for almost all,5,logs/build_panel_output.txt,"3,186 of 3,192 (DF,FW: 6)",OK
+Ch4 s4.3,"Typical shots, npg, assists per 90",~1.3; 0.11; 0.08,thesis_outputs/tables/summary_statistics.csv,1.26; 0.112; 0.083,OK
+Ch4 s4.3,Shrinkage prior strength,kappa=10,analysis/build_panel.py l.61,SHRINK_K = 10,OK
+Ch4 s4.4,Matching thresholds,70/85/92,analysis/collect_tm_v2.py l.204-209,70/85/92,OK
+Ch4 s4.4,Outfield players linked,"1,446 of 1,507 (96.0%)",analysis/tm_out/summary.json,"1,446/1,507 = 95.95%","OK, but measured on the raw FBref club rows at the collection step (1,507 keys), not on the final 1,500/1,499 sample"
+Ch4 s4.4; Ch8 s8.5,Player-seasons linked,96.2% (Ch8: 96%),tm_out/summary.json; analysis/panel/analysis_panel.csv,"0.962 at collection; 95.4% of the final 3,192 player-seasons have a tm_id after rejections/splits",PARTLY WRONG (report 95.4% for the analysis sample or say 'at the collection step')
+Ch4 s4.4,Weak links (score<92) inspected,32,analysis/tm_out/crosswalk_weak_matches.csv,32 rows,OK
+Ch4 s4.4,Rejected links,1 + 2,tm_out/crosswalk_reject.csv,3 rows,OK
+Ch4 s4.4,TM ids with two FBref spellings; in sample; split; unified,15; 12; 11; 1,logs/make_analysis_panel_output.txt,15 ids/30 keys; 11 split; 1 unified,"OK (the split rule also uses birth year >1 apart, e.g. two 'Marcao'; text says 'clearly different names')"
+Ch4 s4.4,Name+birth keys -> players,"1,500 -> 1,499",logs/make_analysis_panel_output.txt,"1,500 -> 1,499",OK
+Ch4 s4.5,Valuation window,+/-120 days of 1 June,"collect_tm_v2.py l.52, 253-265",WINDOW_DAYS = 120,OK
+Ch4 s4.5,Share with value; range,94.5%; 91-96%,thesis_outputs/tables/sample_by_season.csv,0.9445; 0.914-0.959,OK
+Ch9,Valuations available,94%,sample_by_season.csv,94.5%,MINOR (inconsistent rounding with Ch4: use 94.5%)
+Ch4 s4.5,Pairs; with value; final,"1,433; 1,364; 1,361 of 697",logs/make_analysis_panel_output.txt; regression_summary.csv,"1,433; 1,364; 1,361 (697 players)",OK
+Ch4 s4.5,"Outcome mean, sd, unchanged, club change",0.07; 0.63; 14%; 22%,logs/make_analysis_panel_output.txt,"0.070; 0.630; 14.4% (of 1,364); 22.1% (of 1,433) / 22.3% (of 1,361)",OK
+Ch4 Table 4.2 note,'Season pairs used ... form the estimation sample',"total 1,364",sample_by_season.csv,"1,364 (estimation sample is 1,361)","MINOR (note inconsistent with N=1,361)"
+Ch4 Table 4.4 note,Change in log MV refers to the estimation sample,"N=1,364",summary_statistics.csv,"N=1,364 (outcome) and 1,433 (shift)","MINOR (not the 1,361 estimation sample)"
+Ch5 s5.1.2,Fixed weights,"0.501, 0.224, 0.275","fcmd_mdnc.weights_by_variable_count([10,2,3])","0.5012, 0.2241, 0.2745",OK
+Ch5 s5.1.2,"Max scaling: rates took 96-97% (raw), 60-70% (shrunk) with 21-34% noise",96-97; 60-70; 21-34,analysis/regression/estimated_weights_2324.csv,"0.959, 0.967; 0.601, 0.704; 21.4%, 34.0%",OK
+Ch5 s5.1.2,"Mean scaling: positions 76-91% in three of four runs (K=3,4)",76-91%,estimated_weights_2324.csv,"0.762, 0.871, 0.905","MINOR (0.905 rounds to 90%, not 91%)"
+Ch5 s5.1.2,K=5: collapse onto positions in all four; completely in three; 90% in fourth; XB zero in three,4; 3; 90%; 3,estimated_weights_2324.csv,1.000 x3; 0.901; XB~0 x3,OK
+Ch5 intro,Median XB across grid by m,1.06 (1.3); 0.99; 0.91; 0.70,thesis_outputs/tables/spec_grid_by_m.csv,1.061; 0.985; 0.905; 0.705,"OK, but m=1.2 (1.030 < 1.061) is omitted, so the 'falls with m' story is not monotone; values rest on stale grid folders (C1)"
+Ch5 intro; Ch7 s7.5; Ch8 s8.5,XB lowest at m=1.4 within the main configuration among 1.2-1.5,m=1.4,spec_grid.csv (shrunk K4 rho1),"0.894, 0.719, 0.661, 0.749 (and 0.633 at m=2.0)","OK as stated (but XB is lowest at m=2.0 overall; m!=1.3 values from stale folders, C1)"
+Ch5 s5.1.3,"Noise share at K=4, rho=1.0",about 5%,select_K_summary.csv,5.3%,OK
+Ch5 s5.1.3,Paper's noise rule gave 99% noise in one setting,99%,no stored file,-,UNVERIFIABLE
+Ch5 s5.2; Ch7 s7.6,Medoid-based alignment consistent in 36/120 runs (30%); by K 73/27/17/3%,36/120,no stored file (alignment_check.csv now reflects profile alignment: 120/120),-,UNVERIFIABLE (internally consistent: 22+8+5+1 = 36)
+Ch5,"Starts, iterations, CV, bootstrap reps",10; 200; 5x30; 500,fcmd_mdnc.py l.127; regression.py l.44; bootstrap.py l.54-55,10; 200; 5 folds x 30; 500,OK
+Ch6 Table 6.1,All diagnostics,see table,analysis/clustering/select_K_summary.csv,all 64 cells match,OK
+Ch6 Table 6.2 and text,Profiles and shares,see table,thesis_outputs/tables/archetype_profiles.csv,all cells match,OK
+Ch6 Table 6.3 and text,"Medoids; position labels of medoids (DF 8/8; strikers FW 6 + FW,MF 2; wide FW,MF 7, MF in 2024/25; CM MF 7)",see table,analysis/clustering/medoids_shrunk_K4.csv,match,OK
+Ch6 s6.2,Defenders 30-35% of average membership; noise largest in 2024/25 (~11%),30-35%; 11%,aligned_memberships_shrunk_K4.csv,29.5-34.5%; 11.2%,OK
+Ch6 s6.3,Persistence by archetype; flows,"DEF 88, CM 69, STR 65, WIDE 54; 20/17/17; 0 DEF<->STR; noise->wide 1/3, ->STR 1/4",transitions_shrunk_K4.csv,"88.1, 68.6, 64.7, 53.6; 19.7/16.8/17.4; 0 and 0; 32.8%, 24.6%",OK
+Ch6 s6.3,Mean shift; max,0.36; up to 1.4,transitions_shrunk_K4.csv,0.356; 1.38,OK
+Ch6 s6.3 Fig 6.4,"Trajectories (Inacio, Palhinha, Diaz, Otavio, Rafa Silva, Paulinho)",descriptions,aligned_memberships_shrunk_K4.csv,"match (e.g. Palhinha DF 0.24 in 18/19, wide 0.31 in 21/22)",OK
+Ch6 s6.4.1,Core baseline adj R2; OOS R2,0.448; 0.436,regression/regression_summary.csv,0.4477; 0.4361,OK
+Ch6 s6.4.1,Full baseline adj R2; OOS,0.448; 0.422,regression_summary.csv,0.4477; 0.4222,OK
+Ch6 s6.4.1,Age coefficient 'per year',-0.16 per year,thesis_outputs/tables/coef_core_m1.3.csv,-0.162 (age) and +0.0019 (age^2): marginal effect at age 25 = -0.067/yr,WRONG interpretation (the -0.16 is the slope at age 0)
+Ch6 s6.4.1,Minutes level/change; dppm; goals level/change; AAD of goals,"0.19, 0.37; 0.29; 0.069, 0.061; 0.11",coef_core_m1.3.csv; panel/scale_table.csv,"0.188, 0.372; 0.288; 0.069, 0.061; 0.106","OK (but these are from the extended model, Table C.1, not the baseline)"
+Ch6 s6.4.1,Assists change p,0.06,coef_core_m1.3.csv,0.064,OK
+Ch6 Table 6.4,"Coefficients, bootstrap SEs, p",see table,"regression/bootstrap_shrunk_K4_{core,full}.csv",all match,OK (but with position-change controls (C2) the bootstrap joint p becomes 0.352/0.120 and the wide-attacker coefficient -0.113 (p=0.26)/-0.202 (p=0.068))
+Ch6 s6.4.2,Percent effect of 0.10 shift (wide),-2.1%; -3.0%,delta_u_coefficients_*_baseline.csv,-2.14%; -3.03%,OK
+Ch6 s6.4.2; Ch1; Ch8; Ch9,Bootstrap Wald p core/full; conventional,0.079/0.015; 0.027/0.002,bootstrap_summary.csv; regression_summary.csv,0.0786/0.0153; 0.0269/0.0022,OK
+Ch6 s6.4.2,Gains: adj R2 +0.34/+0.56; OOS +0.08/+0.33; share CV better 73%/93%,see text,regression_summary.csv,0.337/0.562; 0.076/0.326; 0.733/0.933,OK
+Ch6 Table 6.5,All cells,see table,regression_summary.csv,all match,OK
+Ch6 s6.4.3,Hausman p; FE subsample; FE p,<0.001; ~350 players; 0.018/0.001,regression/robustness_checks.csv; recomputed,"0.0 (non-robust covariance); 346 players (1,010 pairs); 0.0177/0.0013",OK (but see methodology on Hausman)
+Ch7 s7.1,Bootstrap SE inflation,"7-46%, 19% on average",regression/bootstrap_summary.csv,1.074-1.465; mean 1.189 (20 rows),OK
+Ch7 s7.1,K=3 shrunk p change,0.27->0.56; 0.05->0.34,robustness_configurations.csv / bootstrap_summary.csv,0.266->0.557; 0.053->0.335,OK
+Ch7 s7.1,Main config SE ratio,1.08 and 1.15 (Table: 1.11),bootstrap_summary.csv,1.083; 1.147,OK
+Ch7 s7.1,Bootstrap mean vs original coefficient,"up to 0.17, toward zero","bootstrap_*_{core,full}.csv (boot_bias); bootstrap_summary.csv (max_abs_bias)","max 0.253 (m=2.0 full), 0.199 (raw K3 full); up to 1.5 bootstrap SEs; 46/78 toward zero",WRONG (max is 0.25)
+Ch7 Table 7.1,All cells,see table,bootstrap_summary.csv; regression_summary.csv,all match,OK
+Ch7 Table 7.2,All cells,see table,regression/robustness_checks.csv,all match,OK
+Ch7 s7.2,Significant in 'seven of the eight variations' (full) and 'five of eight' (core),7/8; 5/8,robustness_checks.csv,"incl. main row: 7/8, 5/8; of the 7 actual variations: 6/7 (full), 4/7 (core)",MINOR (the main row is not a variation)
+Ch7 s7.3,PCA: variance of first four components,about 71%,"recomputed from panel (pooled, z-scored)",70.6%,OK
+Ch7 Table 7.3 A,PCA p and gains,"0.483, -0.01; 0.589, +0.00",regression/pca_benchmark.csv,"0.4825, -0.015pp; 0.5893, +0.005pp",OK
+Ch7 Table 7.3 B; s7.3,Minimal baseline adj R2; p by m,0.433 vs 0.448; 0.108/0.020/0.001/0.000/0.005,regression/minimal_baseline.csv,match,OK vs file; rows m!=1.3 rest on stale clustering folders (C1)
+Ch7 s7.4,"Bootstrap: 3 of 10 below 5%, 3 between 5-8%; gains 0.56-0.59 / 0.33-0.47",see text,bootstrap_summary.csv; regression_summary.csv,match,OK
+Ch7 Table 7.4,All cells,see table,spec_grid.csv; bootstrap_summary.csv,match,OK vs files; rows m!=1.3 NOT reproducible with current code (C1). Conventional p m=1.2: 0.292/0.102 stored vs 0.035/0.005 re-run. Corrected bootstrap p: m=1.2 0.050/0.013 (table 0.445/0.277); m=1.5 0.008/0.004 (0.029/0.008); m=2.0 0.318/0.126 (0.088/0.019)
+Ch7 s7.5,Wide-attacker coef at m=1.4 and 1.5 with bootstrap p,-0.26/-0.36 (0.004/0.001); -0.31/-0.41 (0.003/0.001),bootstrap_shrunk_K4_rho1.0_m1.4/m1.5_*.csv,-0.258/-0.357 (0.0043/0.0007); -0.306/-0.413 (0.0035/0.0007),"OK vs files (stale folders, C1: re-run m=1.5 gives -0.285/-0.371)"
+Ch7 s7.5,Noise multiplier: noise shares; conventional and bootstrap p,"14%, 1.5%; 0.046/0.002, 0.027/0.002, 0.099/0.014; boot 0.171/0.069",regression/sensitivity_rho_m.csv; bootstrap_summary.csv,"13.6%, 1.5%; match","OK vs files (rho!=1.0 from stale folders, C1)"
+Ch7 s7.5 and Table 7.5,"Grid: 34/120, 74/120; 92/107; medians; max 0.83/0.72; by K, m, rho, rates",see text,regression/spec_grid.csv,all match,OK vs file; 96 of 120 cells from stale folders (C1)
+Ch7 s7.5,Holm: smallest bootstrap p; thresholds,"0.0076; 0.005, 0.0025",bootstrap_summary.csv,0.00763,OK
+Ch7 s7.6,Medoid position agreement by m; by K,"0.88, 0.88, 0.84, 0.75, 0.59; 0.74-0.79",regression/alignment_check.csv,"0.875, 0.875, 0.844, 0.750, 0.594; 0.737-0.792","OK vs file (stale folders for m!=1.3, C1)"
+Ch7 s7.6,"Medoid-based alignment inconsistent: m=1.5 one pair (22/23->23/24), m=2.0 two, m=1.2 three",1/2/3 pairs,no stored file,-,UNVERIFIABLE
+Ch7 s7.7,Earlier run of main configuration,0.70 / 0.36,no stored file,-,UNVERIFIABLE
+Ch7 Table 7.6 and s7.7,"Seed analysis: medians, IQR, max, shares, gains",see table,thesis_outputs/tables/seed_sensitivity.csv; regression/seed_sensitivity.csv,all match,OK
+Ch7 s7.7,Main run is a favourable draw,0.027/0.002 vs medians 0.11/0.025,seed_sensitivity.csv,main run ranks 8th (core) and 6th (full) of 30 at m=1.3,OK
+Ch8 s8.1,Persistence by archetype,88; 54; 65; noise 25,transitions_shrunk_K4.csv,88.1; 53.6; 64.7; 24.6,OK
+Ch8 s8.2,Crispness at m=1.4-1.5; m=1.2; m=2.0,37-49%; 76%; 4%,spec_grid.csv,36.8-49.4%; 76.4%; 4.2%,"OK vs file (stale for m!=1.3, C1)"
+Ch8 s8.5,Ambiguous alignments at K=4,2 of 28,select_K_summary.csv,2 (4 archetypes x 7 pairs = 28),OK
+Ch8 s8.5,'two players of the sample with the same name merged by FBref',2,logs/build_panel_output.txt,1 merged player-season removed (Vitinha); 22 same-name rows removed,UNCLEAR wording (rewrite)
+App B,Season n; settings,n=406; m=1.3; rho=0.5,estimated_weights_check.py; build_panel log,406; 1.3; 0.5,OK (but rho=0.5 and max/mean scaling differ from the main model; see Section 6)
+App B Table B.1,All cells,see table,regression/estimated_weights_2324.csv,all match,OK
+App C Tables C.1-C.2,All cells,see tables,thesis_outputs/tables/coef_*_m1.3.csv,match,"OK (raw variable names in C.2, e.g. 'Level of sot p90', 'g sh shr')"
+App C Table C.3; text on m=1.5 numbering,Coefficients at m=1.4; ordering at m=1.5,see table,coef_core_m1.4.csv,match,"OK vs file (stale folder, C1); text describes m=1.5 tables that are not included"
