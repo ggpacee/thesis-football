@@ -6,7 +6,7 @@ This chapter examines how far the results of Chapter~\ref{ch:results} depend on 
 \section{Estimated memberships: the bootstrap}
 \label{sec:rob-bootstrap}
 
-Table~\ref{tab:bootstrap-K} compares the conventional Wald tests, which treat the memberships as observed, with the tests based on the two-stage bootstrap (Section~\ref{sec:method-bootstrap}) for the main fuzziness and noise settings ($m=1.3$, $\rho=1.0$) and different numbers of archetypes and rate variables. The bootstrap standard errors are larger than the conventional ones by 7 to 46\% depending on the cell and the baseline, 19\% on average, and the correction is largest where the memberships are least reliable: for $K=3$ with shrunk rates it raises the $p$-value of the core test from 0.27 to 0.56 and that of the full test from 0.05 to 0.34. For the main configuration the ratio is 1.08 and 1.15, and the joint $p$-values change from 0.027 to 0.079 and from 0.002 to 0.015, so the correction matters for the conclusion: against the core baseline the association is no longer significant at 5\%. The mean of the bootstrap estimates also differs from the original coefficients, by up to 0.17 for individual coefficients in the settings reported below and in the direction of zero in the cases with the largest differences, as would be expected if noise in the memberships attenuated the coefficients. The bootstrap corrects the standard errors but not this attenuation, so the point estimates should be read as conservative.
+Table~\ref{tab:bootstrap-K} compares the conventional Wald tests, which treat the memberships as observed, with the tests based on the two-stage bootstrap (Section~\ref{sec:method-bootstrap}) for the main fuzziness and noise settings ($m=1.3$, $\rho=1.0$) and different numbers of archetypes and rate variables. The bootstrap standard errors are larger than the conventional ones by 7 to 46\% depending on the cell and the baseline, 19\% on average, and the correction is largest where the memberships are least reliable: for $K=3$ with shrunk rates it raises the $p$-value of the core test from 0.27 to 0.56 and that of the full test from 0.05 to 0.34. For the main configuration the ratio is 1.08 and 1.15, and the joint $p$-values change from 0.027 to 0.079 and from 0.002 to 0.015, so the correction matters for the conclusion: against the core baseline the association is no longer significant at 5\%. The mean of the bootstrap estimates also differs from the original coefficients, by up to 0.20 for individual coefficients in the configurations of Table~\ref{tab:bootstrap-K}, which is about 1.2 bootstrap standard errors. For the coefficient of the wide attackers in the main configuration the difference is 0.07 (0.75 standard errors) against the core baseline, and an interval based on the percentiles under normality, rather than centred on the estimate, would include zero. The difference may reflect attenuation by noise in the memberships, or imperfect matching of the archetypes to the original solution in the replications, and the data cannot separate the two. The bootstrap standard errors are used for the tests, but the point estimates and intervals should be read with this in mind.
 
 \begin{table}[ht]
 	\centering
@@ -33,7 +33,7 @@ Raw & 4 & 0.034 & 0.055 & 0.002 & 0.016 & 1.17 & +0.59 & +0.40 \\
 \section{Sample and outcome}
 \label{sec:rob-sample}
 
-The association in the main configuration is not driven by the definition of the sample or the outcome (Table~\ref{tab:variations}). Against the full baseline, the block of membership changes is significant at 5\% in seven of the eight variations, and against the core baseline in five of eight, with changes in the adjusted $R^2$ that are positive in all of them (0.09 to 0.39 percentage points for the core baseline and 0.23 to 0.56 for the full baseline). The exceptions are the sample without the pandemic seasons (960 pairs), against both baselines, the players who did not change club (1,058 pairs) against the core baseline ($p=0.24$; the full-baseline test is just significant at $p=0.046$), and the players aged up to 30 against the core baseline ($p=0.064$): in these the gains stay positive but the tests lose power. The result is the same with player fixed effects (Section~\ref{sec:results-valuation}). These variations and the fixed-effects comparison were computed for the main configuration only, with conventional standard errors.
+The association in the main configuration is not driven by the definition of the sample or the outcome (Table~\ref{tab:variations}). Not counting the main sample, the block of membership changes is significant at 5\% in six of the seven variations against the full baseline and in four of seven against the core baseline, with conventional standard errors, and with changes in the adjusted $R^2$ that are positive in all of them (0.09 to 0.39 percentage points for the core baseline and 0.23 to 0.56 for the full baseline). The exceptions are the sample without the pandemic seasons (960 pairs), against both baselines, the players who did not change club (1,058 pairs) against the core baseline ($p=0.24$; the full-baseline test is just significant at $p=0.046$), and the players aged up to 30 against the core baseline ($p=0.064$): in these the gains stay positive but the tests lose power. The result is the same with player fixed effects (Section~\ref{sec:results-valuation}). These variations and the fixed-effects comparison were computed for the main configuration only, with conventional standard errors.
 
 \begin{table}[ht]
 	\centering
@@ -67,7 +67,7 @@ Without noise-dominated players (noise membership $>0.5$) & 1,283 & 669 & 0.035 
 
 \paragraph{Linear summaries.} Principal component scores condense the same twelve statistics linearly. The first four components explain about 71\% of their variance. Their changes are jointly insignificant against the core baseline ($p=0.48$, change in adjusted $R^2$ of $-0.01$ percentage points), and so are those of the first eight ($p=0.59$). They cannot be tested against the full baseline, which already contains the changes of every statistic. This benchmark does not depend on $m$ or on the random draw. Because the membership changes are significant at several values of $m$ (Section~\ref{sec:rob-fuzziness}) where the linear summary is not, any association that the memberships carry is not a reflection of linear changes in the performance statistics.
 
-\paragraph{Controls without performance statistics.} The overlap between the memberships and the performance controls is the reason for the full baseline, and the opposite check removes the performance controls altogether. A baseline with only age, playing time, position, team form, club change and season effects has an adjusted $R^2$ of 0.433, compared with 0.448 once goals and assists are added. Table~\ref{tab:minimal} shows that the membership changes do not behave differently against this baseline: they are significant at $m=1.3$ ($p=0.020$) and more clearly at $m=1.4$ and $m=1.5$ ($p=0.001$ and $p<0.001$ with conventional standard errors), with gains in out-of-sample $R^2$ of 0.44 and 0.59 percentage points at these two values. The membership changes are therefore not proxies for goals and assists.
+\paragraph{Controls without performance statistics.} The overlap between the memberships and the performance controls is the reason for the full baseline, and the opposite check removes the performance controls altogether. A baseline with only age, playing time, position, team form, club change and season effects has an adjusted $R^2$ of 0.433, compared with 0.448 once goals and assists are added. Table~\ref{tab:minimal} shows that the membership changes do not behave differently against this baseline: in the main configuration they are significant ($p=0.020$ with conventional standard errors), with gains of 0.39 percentage points in adjusted $R^2$ and 0.13 points in out-of-sample $R^2$. The membership changes are therefore not proxies for goals and assists. They are, however, partly proxies for changes in the position labels, which are in neither baseline: with those changes controlled, the bootstrap $p$-values are 0.35 (core) and 0.12 (full) (Section~\ref{sec:results-position}).
 
 \begin{table}[ht]
 	\centering
@@ -83,17 +83,13 @@ Principal components, first 4 & 0.483 & -0.01 & --- \\
 Principal components, first 8 & 0.589 & +0.00 & --- \\
 		\midrule
 		\multicolumn{4}{l}{\emph{B. Membership changes against the baseline without performance statistics}} \\
-		Fuzziness $m$ & $p$ & $\Delta\bar R^2$ & $\Delta R^2_{oos}$ \\
+		Setting & $p$ & $\Delta\bar R^2$ & $\Delta R^2_{oos}$ \\
 		\midrule
-1.2 & 0.108 & +0.26 & -0.04 \\
-1.3 & 0.020 & +0.39 & +0.13 \\
-1.4 & 0.001 & +0.63 & +0.44 \\
-1.5 & 0.000 & +0.74 & +0.59 \\
-2.0 & 0.005 & +0.53 & +0.36 \\
+Main configuration ($m=1.3$) & 0.020 & +0.39 & +0.13 \\
 		\bottomrule
 	\end{tabular}
 	\par\smallskip
-	\parbox{0.95\textwidth}{\footnotesize\emph{Note.} Cluster-robust Wald $p$-values, treating the memberships as observed; changes in adjusted and cross-validated $R^2$ in percentage points. Panel B: shrunk rates, $K=4$, $\rho=1.0$. $N=1{,}361$.}
+	\parbox{0.95\textwidth}{\footnotesize\emph{Note.} Cluster-robust Wald $p$-values, treating the memberships as observed; changes in adjusted and cross-validated $R^2$ in percentage points. Panel B: main configuration (shrunk rates, $K=4$, $m=1.3$, $\rho=1.0$). $N=1{,}361$.}
 \end{table}
 
 \section{Number of archetypes and rate variables}
@@ -104,38 +100,13 @@ At $m=1.3$ the number of archetypes and the treatment of the rates matter more t
 \section{Fuzziness and the noise multiplier}
 \label{sec:rob-fuzziness}
 
-The fuzziness exponent $m$ is the setting on which the results depend most. Table~\ref{tab:fuzziness} fixes the other settings of the main configuration and varies $m$ from 1.2 to 2.0. Larger values of $m$ spread the memberships more evenly, as the column on crispness shows: the share of players with a largest membership of at least 0.7 falls from 76\% at $m=1.2$ to 63\% at $m=1.3$ (the main configuration), 49\% at $m=1.4$, 37\% at $m=1.5$ and 4\% at $m=2.0$, where the memberships are almost uniform and hardly describe archetypes. The noise share rises from 4.8\% to 12\%, and the persistence of archetypes is between 0.67 and 0.75 for $m$ from 1.2 to 1.5 and falls to 0.54 at $m=2.0$.
+The fuzziness exponent $m$ controls how evenly the memberships are spread: the larger $m$, the less crisp the memberships, and at $m=2.0$ they are almost uniform and hardly describe archetypes. A single clustering run is one draw, and the draws differ strongly (Section~\ref{sec:rob-seeds}), so results for single values of $m$ or $\rho$ are not read cell by cell. The dependence on $m$ is read from the 30 draws per value in Table~\ref{tab:seeds}. Against the full baseline the test is significant in 40\% of the draws at $m=1.2$, in 60 to 73\% at $m=1.3$ to $1.5$ and in 43\% at $m=2.0$, and against the core baseline in 17\%, 37\%, 37\%, 27\% and 17\% of the draws. The association is therefore weaker for near-crisp and for near-uniform memberships than for moderately soft ones, in the distribution over random draws. The value $m=1.5$ is one of the three values compared by \citeA{durso2022robust}, and both $m=1.4$ and $m=1.5$ lie within the range of 1 to 1.5 that is recommended for medoid-based methods. Within the main configuration the Xie--Beni index is lowest at $m=1.4$ among the values from 1.2 to 1.5, which is the value that the proposal's selection rule would have chosen; this was not the rule used (Chapter~\ref{ch:methodology}), and the index falls mechanically with $m$, so it is not used as an endorsement.
 
-\begin{table}[ht]
-	\centering
-	\footnotesize
-	\setlength{\tabcolsep}{3.5pt}
-	\caption{Sensitivity to the fuzziness exponent $m$ (shrunk rates, $K=4$, $\rho=1.0$)}
-	\label{tab:fuzziness}
-	\begin{tabular}{rrrrrrrrrrr}
-		\toprule
-		 & & & & & \multicolumn{3}{c}{Core baseline} & \multicolumn{3}{c}{Full baseline} \\
-		\cmidrule(lr){6-8}\cmidrule(lr){9-11}
-		$m$ & Crisp & Noise & Persist. & XB & $p$ & $\Delta\bar R^2$ & $\Delta R^2_{oos}$ & $p$ & $\Delta\bar R^2$ & $\Delta R^2_{oos}$ \\
-		\midrule
-1.2 & 76\% & 4.8\% & 0.71 & 0.89 & 0.445 & +0.09 & -0.22 & 0.277 & +0.18 & -0.07 \\
-1.3 & 63\% & 5.3\% & 0.75 & 0.72 & 0.079 & +0.34 & +0.13 & 0.015 & +0.56 & +0.43 \\
-1.4 & 49\% & 6.3\% & 0.70 & 0.66 & 0.037 & +0.42 & +0.28 & 0.008 & +0.66 & +0.58 \\
-1.5 & 37\% & 7.3\% & 0.67 & 0.75 & 0.029 & +0.52 & +0.41 & 0.008 & +0.75 & +0.72 \\
-2.0 & 4\% & 12.0\% & 0.54 & 0.63 & 0.088 & +0.22 & +0.06 & 0.019 & +0.43 & +0.25 \\
-		\bottomrule
-	\end{tabular}
-	\par\smallskip
-	\parbox{0.95\textwidth}{\footnotesize\emph{Note.} Crisp is the share of players whose largest substantive membership is at least 0.7; Noise the share assigned to the noise cluster; Persist.\ the share who keep their archetype; XB the Xie--Beni index averaged over seasons (lower is better). $p$ is the bootstrap Wald $p$-value of the block of membership changes (500 replications); $\Delta\bar R^2$ and $\Delta R^2_{oos}$ are gains in adjusted and cross-validated $R^2$ in percentage points (ten cross-validation repetitions, so the row $m=1.3$ differs slightly from Table~\ref{tab:comparison}, which uses 30). The row $m=1.3$ is the main configuration.}
-\end{table}
+The numbering of the archetypes is inherited from the first season and differs between runs, so coefficients are compared by the type of archetype. In the clustering runs at $m=1.4$ and $m=1.5$ that were examined, the coefficient of the wide attackers has the same sign as in the main configuration and is again the largest in size, which is the shift from the defender profile to the wide-attacker profile; in the main configuration a shift of 0.10 in membership corresponds to a difference in value of about $-2$ to $-3$ per cent.
 
-With near-crisp memberships ($m=1.2$) there is no association after the bootstrap ($p=0.45$ and $0.28$). From $m=1.3$ on the membership changes are jointly significant against the full baseline ($p=0.015$, $0.008$, $0.008$ and $0.019$ at $m=1.3$, 1.4, 1.5 and 2.0), and against the core baseline they are significant at $m=1.4$ and $m=1.5$ ($p=0.037$ and $0.029$) and borderline at $m=1.3$ and $m=2.0$ ($p=0.079$ and $0.088$). The adjusted $R^2$ rises by 0.4 to 0.5 percentage points against the core baseline and by 0.7 to 0.8 points against the full baseline at $m=1.4$ and $1.5$, and the out-of-sample $R^2$ by 0.3 to 0.4 and by 0.6 to 0.7 points. The values $m=1.4$ and $m=1.5$ lie within the range of 1 to 1.5 that is recommended for medoid-based methods, and $m=1.5$ is one of the three values compared by \citeA{durso2022robust}. Within the main configuration the Xie--Beni index is lowest at $m=1.4$ among the values from 1.2 to 1.5, which is the value that the proposal's selection rule would have chosen; this was not the rule used (Chapter~\ref{ch:methodology}), but the reader should know that the results at that value are somewhat stronger than in the main configuration.
+\paragraph{Noise multiplier.} The noise multiplier $\rho$ sets the share of players that are assigned to the noise cluster: lower values assign more players to it. Three values, 0.75, 1.0 and 1.5, are included in the specification grid below.
 
-The archetypes are the same types at $m=1.3$, $1.4$ and $1.5$. The medoids are defenders in all eight seasons for one archetype, forwards for the strikers, forwards with a midfield role for the wide attackers, and midfielders for the central midfielders. The numbering of the archetypes differs between runs, because it is inherited from the first season, so coefficients are compared by the type of archetype. In all three runs the reference is the defenders and all coefficients are negative, and the one that stands out is that of the wide attackers: $-0.22$ and $-0.31$ against the core and full baselines at $m=1.3$, $-0.26$ and $-0.36$ at $m=1.4$ (bootstrap $p=0.004$ and $0.001$), and $-0.31$ and $-0.41$ at $m=1.5$ ($p=0.003$ and $0.001$). The shift from the defender profile to the wide-attacker profile is therefore the association that is found, and it grows in size with the fuzziness. A shift of 0.10 corresponds to a difference in value of about $-2$ to $-3$ per cent at $m=1.3$ and about $-3$ to $-4$ per cent at $m=1.5$.
-
-\paragraph{Noise multiplier.} A lower noise multiplier ($\rho=0.75$) increases the noise share to 14\% and a higher one ($\rho=1.5$) lowers it to 1.5\%. At $m=1.3$ the conventional $p$-values are 0.046 (core) and 0.002 (full) at $\rho=0.75$, 0.027 and 0.002 at the main value $\rho=1.0$, and 0.099 and 0.014 at $\rho=1.5$; with the bootstrap, $\rho=1.5$ gives 0.171 and 0.069. The association is therefore weaker when fewer players are put into the noise cluster.
-
-\paragraph{The whole specification space.} Table~\ref{tab:grid} summarises the 120 combinations of rates, number of archetypes, noise multiplier and fuzziness, and Figure~\ref{fig:grid} shows the conventional $p$-values. Against the core baseline, 34 of the 120 specifications (28\%) have a $p$-value below 5\%; against the full baseline 74 (62\%) do. The adjusted $R^2$ increases in 92 (core) and 107 (full) of the specifications, by a median of 0.13 and 0.28 percentage points and by at most 0.83 points. The out-of-sample $R^2$ increases in 43 (core) and 79 (full) of the 120 specifications, with medians of $-0.08$ and $+0.13$ points and a maximum of 0.72 points. The proportion of significant results is highest at $K=4$ (53\% core, 83\% full) and lowest at $K=5$ (10\% and 30\%), highest at $m=1.5$ (38\% core, 83\% full) and, against the full baseline, lowest at $m=1.2$ (42\%) and $m=2.0$ (50\%). It is the same for shrunk and raw rates against the core baseline (28\% each) and somewhat higher for raw rates against the full baseline (70\% against 53\%). The map in Figure~\ref{fig:grid} is patchy and not a smooth function of $m$ and $K$, which suggests that part of the pattern reflects the idiosyncrasies of individual clustering solutions and of the random draw (Section~\ref{sec:rob-seeds}).
+\paragraph{The whole specification space.} Table~\ref{tab:grid} summarises the 120 combinations of rates, number of archetypes, noise multiplier and fuzziness, and Figure~\ref{fig:grid} shows the conventional $p$-values for $\rho=1.0$ and $\rho=1.5$. Against the core baseline, 30 of the 120 specifications (25\%) have a $p$-value below 5\%; against the full baseline 76 (63\%) do. The adjusted $R^2$ increases in 96 (core) and 107 (full) of the specifications, by a median of 0.11 and 0.27 percentage points and by at most 0.90 points. The out-of-sample $R^2$ increases in 39 (core) and 81 (full) of the 120 specifications, with medians of $-0.09$ and $+0.12$ points and a maximum of 0.88 points. The proportion of significant results is highest at $K=4$ (47\% core, 80\% full) and lowest at $K=5$ (10\% and 40\%). Against the full baseline it is highest at $m=1.5$ (83\%) and lowest at $m=1.2$ (42\%), and against the core baseline it is highest at $m=1.4$ and $m=1.5$ (33\%). It is similar for shrunk and raw rates (22\% and 28\% against the core baseline, 62\% and 65\% against the full baseline) and does not vary systematically with $\rho$. The map in Figure~\ref{fig:grid} is patchy and not a smooth function of $m$ and $K$, which suggests that part of the pattern reflects the idiosyncrasies of individual clustering solutions and of the random draw (Section~\ref{sec:rob-seeds}).
 
 \begin{table}[ht]
 	\centering
@@ -148,29 +119,29 @@ The archetypes are the same types at $m=1.3$, $1.4$ and $1.5$. The medoids are d
 		\cmidrule(lr){3-4}\cmidrule(lr){5-6}\cmidrule(lr){7-8}
 		 & $N$ & Core & Full & Core & Full & Core & Full \\
 		\midrule
-All specifications & 120 & 28\% & 62\% & +0.13 & +0.28 & -0.08 & +0.13 \\
-\midrule
-\multicolumn{8}{l}{\emph{By fuzziness $m$}} \\
-\quad $m=1.2$ & 24 & 25\% & 42\% & +0.07 & +0.17 & -0.15 & -0.04 \\
-\quad $m=1.3$ & 24 & 17\% & 67\% & +0.16 & +0.37 & -0.09 & +0.17 \\
-\quad $m=1.4$ & 24 & 38\% & 67\% & +0.13 & +0.35 & -0.07 & +0.20 \\
-\quad $m=1.5$ & 24 & 38\% & 83\% & +0.18 & +0.47 & -0.07 & +0.20 \\
-\quad $m=2.0$ & 24 & 25\% & 50\% & +0.10 & +0.19 & -0.08 & +0.02 \\
-\midrule
-\multicolumn{8}{l}{\emph{By number of archetypes $K$}} \\
-\quad $K=3$ & 30 & 23\% & 67\% & +0.12 & +0.26 & -0.01 & +0.17 \\
-\quad $K=4$ & 30 & 53\% & 83\% & +0.20 & +0.40 & +0.04 & +0.26 \\
-\quad $K=5$ & 30 & 10\% & 30\% & +0.01 & +0.12 & -0.17 & -0.09 \\
-\quad $K=6$ & 30 & 27\% & 67\% & +0.17 & +0.37 & -0.10 & +0.10 \\
-\midrule
-\multicolumn{8}{l}{\emph{By noise multiplier $\rho$}} \\
-\quad $\rho=0.75$ & 40 & 28\% & 70\% & +0.14 & +0.31 & -0.06 & +0.18 \\
-\quad $\rho=1.0$ & 40 & 22\% & 50\% & +0.07 & +0.22 & -0.10 & +0.06 \\
-\quad $\rho=1.5$ & 40 & 35\% & 65\% & +0.13 & +0.27 & -0.07 & +0.10 \\
-\midrule
-\multicolumn{8}{l}{\emph{By rate variables}} \\
-\quad Shrunk & 60 & 28\% & 53\% & +0.13 & +0.23 & -0.08 & +0.08 \\
-\quad Raw & 60 & 28\% & 70\% & +0.13 & +0.34 & -0.09 & +0.16 \\
+		All specifications & 120 & 25\% & 63\% & +0.11 & +0.27 & -0.09 & +0.12 \\
+		\midrule
+		\multicolumn{8}{l}{\emph{By fuzziness $m$}} \\
+		\quad $m=1.2$ & 24 & 21\% & 42\% & +0.07 & +0.21 & -0.17 & -0.04 \\
+		\quad $m=1.3$ & 24 & 17\% & 67\% & +0.16 & +0.32 & -0.10 & +0.15 \\
+		\quad $m=1.4$ & 24 & 33\% & 71\% & +0.12 & +0.31 & -0.07 & +0.15 \\
+		\quad $m=1.5$ & 24 & 33\% & 83\% & +0.16 & +0.39 & -0.08 & +0.20 \\
+		\quad $m=2.0$ & 24 & 21\% & 54\% & +0.10 & +0.21 & -0.09 & +0.05 \\
+		\midrule
+		\multicolumn{8}{l}{\emph{By number of archetypes $K$}} \\
+		\quad $K=3$ & 30 & 23\% & 70\% & +0.10 & +0.23 & -0.03 & +0.15 \\
+		\quad $K=4$ & 30 & 47\% & 80\% & +0.20 & +0.38 & +0.02 & +0.23 \\
+		\quad $K=5$ & 30 & 10\% & 40\% & +0.04 & +0.15 & -0.17 & -0.05 \\
+		\quad $K=6$ & 30 & 20\% & 63\% & +0.17 & +0.33 & -0.13 & +0.07 \\
+		\midrule
+		\multicolumn{8}{l}{\emph{By noise multiplier $\rho$}} \\
+		\quad $\rho=0.75$ & 40 & 18\% & 70\% & +0.11 & +0.26 & -0.10 & +0.13 \\
+		\quad $\rho=1.0$ & 40 & 25\% & 55\% & +0.08 & +0.27 & -0.10 & +0.06 \\
+		\quad $\rho=1.5$ & 40 & 33\% & 65\% & +0.13 & +0.29 & -0.07 & +0.10 \\
+		\midrule
+		\multicolumn{8}{l}{\emph{By rate variables}} \\
+		\quad Shrunk & 60 & 22\% & 62\% & +0.10 & +0.25 & -0.09 & +0.06 \\
+		\quad Raw & 60 & 28\% & 65\% & +0.11 & +0.32 & -0.08 & +0.17 \\
 		\bottomrule
 	\end{tabular}
 	\par\smallskip
@@ -180,20 +151,20 @@ All specifications & 120 & 28\% & 62\% & +0.13 & +0.28 & -0.08 & +0.13 \\
 \begin{figure}[ht]
 	\centering
 	\includegraphics[width=\textwidth]{thesis_outputs/figures/spec_heatmap.png}
-	\caption{Conventional Wald $p$-values across the specification grid}
+	\caption{Conventional Wald $p$-values across the specification grid ($\rho=1.0$ and $\rho=1.5$)}
 	\label{fig:grid}
 	\par\smallskip
-	\parbox{0.95\textwidth}{\footnotesize\emph{Note.} Each cell is one specification. Colour is capped at $p=0.2$; bold values are below 0.05. The left panels use the core baseline, the right panels the full baseline; the upper panels $\rho=1.0$ and the lower panels $\rho=1.5$.}
+	\parbox{0.95\textwidth}{\footnotesize\emph{Note.} Each cell is one specification; the 40 specifications with $\rho=0.75$ are included in Table~\ref{tab:grid} but not shown. Colour is capped at $p=0.2$; bold values are below 0.05. The left panels use the core baseline, the right panels the full baseline; the upper panels $\rho=1.0$ and the lower panels $\rho=1.5$.}
 \end{figure}
 
-\paragraph{Multiple comparisons.} The bootstrap was applied to twenty comparisons (ten configurations against two baselines). The smallest bootstrap $p$-value is 0.0076. Neither if the ten comparisons of the fuzziness grid are treated as one family nor if all twenty are does any comparison survive a Holm correction at the 5\% level, since the thresholds are 0.005 and 0.0025. The specifications are not independent tests of different hypotheses, which makes this correction conservative, but it shows that the evidence is not strong enough to rely on any single cell.
+\paragraph{Multiple comparisons.} The bootstrap was applied to ten comparisons (five configurations at $m=1.3$ and $\rho=1.0$ against two baselines, Table~\ref{tab:bootstrap-K}). The smallest bootstrap $p$-value is 0.012, and no comparison survives a Holm correction at the 5\% level, since the smallest threshold is $0.05/10=0.005$. The specifications are not independent tests of different hypotheses, which makes this correction conservative, but it shows that the evidence is not strong enough to rely on any single cell.
 
 \section{Consistency of the archetype labels across seasons}
 \label{sec:rob-alignment}
 
 The alignment of the archetypes across seasons determines whether a change in a membership is a real transition. The first version of the analysis matched archetypes by the distance between medoids. Its quality was checked for every one of the 120 clustering runs of the specification grid with information that the matching does not use: the profiles of the archetypes. For each pair of adjacent seasons, the check asks whether label $k$ in season $t$ is matched to label $k$ in season $t+1$ when the profiles are matched optimally; a pair is inconsistent if not.
 
-The check found consistent labels in every season pair in only 36 of the 120 runs (30\%). The share falls steeply with the number of clusters: 73\% for $K=3$, 27\% for $K=4$, 17\% for $K=5$ and 3\% for $K=6$. For the shrunk-rate runs with $K=4$ and $\rho=1.0$ it was consistent at $m=1.3$ (the main configuration) and $m=1.4$, and inconsistent in one season pair at $m=1.5$ (2022/23 to 2023/24), in two at $m=2.0$ and in three at $m=1.2$. The inconsistency at $m=1.5$ agrees with what the medoids showed: the central-midfielder and striker medoids of 2023/24 and 2024/25 appeared under the numbers that held other archetypes earlier. For this reason the alignment uses the profiles of the archetypes (Section~\ref{sec:method-alignment}), and \emph{all results in Chapters~\ref{ch:results} and~\ref{ch:robustness}, including the specification grid and the bootstrap, were recomputed with this alignment}. This is a correction of the method made because of the label check and not because of any outcome. After the correction, the labels are consistent in all 120 runs by construction; the independent check is the position labels of the medoids, which do not enter the alignment. The share of seasons in which an archetype's medoid has the archetype's most common position label is 0.88 at $m=1.2$ and $1.3$, 0.84 at $m=1.4$, 0.75 at $m=1.5$ and 0.59 at $m=2.0$ in the $K=4$ runs with shrunk rates, and between 0.74 and 0.79 on average for each $K$ over all runs. The archetypes are thus well defined at $m\le1.4$ and less so at $m=1.5$ and $m=2.0$, where the memberships are softer.
+The check found consistent labels in every season pair in only 36 of the 120 runs (30\%). The share falls steeply with the number of clusters: 73\% for $K=3$, 27\% for $K=4$, 17\% for $K=5$ and 3\% for $K=6$. For the shrunk-rate runs with $K=4$ and $\rho=1.0$ it was consistent at $m=1.3$ (the main configuration) and $m=1.4$, and inconsistent in one season pair at $m=1.5$ (2022/23 to 2023/24), in two at $m=2.0$ and in three at $m=1.2$. The inconsistency at $m=1.5$ agrees with what the medoids showed: the central-midfielder and striker medoids of 2023/24 and 2024/25 appeared under the numbers that held other archetypes earlier. For this reason the alignment uses the profiles of the archetypes (Section~\ref{sec:method-alignment}), and \emph{all results in Chapters~\ref{ch:results} and~\ref{ch:robustness}, including the specification grid and the bootstrap, were recomputed with this alignment}. The correction was triggered by the label check. It was made after earlier valuation results had been seen, which is why those results are reported in Section~\ref{sec:rob-seeds}. After the correction, the labels are consistent in all 120 runs by construction; the independent check is the position labels of the medoids, which do not enter the alignment. In the main configuration, the share of seasons in which an archetype's medoid has the archetype's most common position label is 0.88. It is lower at the highest fuzziness values, so the archetypes are well defined at moderate fuzziness and less sharply defined when the memberships are nearly uniform.
 
 \section{The random draw of the clustering}
 \label{sec:rob-seeds}
@@ -233,7 +204,7 @@ The clustering starts from random medoids, and the partitions of different start
 	\parbox{0.9\textwidth}{\footnotesize\emph{Note.} Each point is one draw; boxes show the quartiles; the dashed line is $p=0.05$; the scale is logarithmic.}
 \end{figure}
 
-The $p$-values vary by orders of magnitude between draws: at $m=1.3$ the full-baseline $p$-value ranges from below 0.001 to 0.32 and the core-baseline value from 0.003 to 0.71. Against the full baseline, the test is significant in 60\% of the draws at $m=1.3$ (median $p=0.025$), 67\% at $m=1.4$ (0.008) and 73\% at $m=1.5$ (0.016), and in 40\% and 43\% at $m=1.2$ and $m=2.0$. Against the core baseline it is significant in 37\%, 37\% and 27\% of the draws at $m=1.3$, 1.4 and 1.5 (medians of 0.08 to 0.11). The median gain in adjusted $R^2$ is 0.26 to 0.38 percentage points against the full baseline and 0.10 to 0.14 points against the core baseline. Out of sample, the median gain is positive against the full baseline (0.12 to 0.23 points, with a positive gain in 70 to 77\% of the draws) but negative against the core baseline (between $-0.02$ and $-0.07$ points, positive in only 40 to 43\% of the draws). The run reported in Chapter~\ref{ch:results} is a favourable draw: its conventional $p$-values (0.027 and 0.002) are lower than the medians over draws (0.11 and 0.025) and its out-of-sample gains are larger. A typical draw therefore shows an association against the full baseline, but not an improvement in out-of-sample prediction over the core baseline, which is the better predictor (cross-validated $R^2$ of 0.436 against 0.422 for the full baseline). Against the full baseline, which overfits, the membership changes improve prediction in most draws; this is consistent with, but does not show, that they act partly as a regulariser for the twenty-four additional statistics.
+The $p$-values vary by orders of magnitude between draws: at $m=1.3$ the full-baseline $p$-value ranges from below 0.001 to 0.32 and the core-baseline value from 0.003 to 0.71. Against the full baseline, the test is significant in 60\% of the draws at $m=1.3$ (median $p=0.025$), 67\% at $m=1.4$ (0.008) and 73\% at $m=1.5$ (0.016), and in 40\% and 43\% at $m=1.2$ and $m=2.0$. Against the core baseline it is significant in 37\%, 37\% and 27\% of the draws at $m=1.3$, 1.4 and 1.5 (medians of 0.08 to 0.11). The median gain in adjusted $R^2$ is 0.26 to 0.38 percentage points against the full baseline and 0.10 to 0.14 points against the core baseline. Out of sample, the median gain is positive against the full baseline (0.12 to 0.23 points, with a positive gain in 70 to 77\% of the draws) but negative against the core baseline (between $-0.02$ and $-0.07$ points, positive in only 40 to 43\% of the draws). The run reported in Chapter~\ref{ch:results} is a favourable draw: its conventional $p$-values (0.027 and 0.002) are lower than the medians over draws (0.11 and 0.025) and its out-of-sample gains are larger. A typical draw therefore shows an association against the full baseline, but not an improvement in out-of-sample prediction over the core baseline, which is the better predictor (cross-validated $R^2$ of 0.436 against 0.422 for the full baseline).
 
 \section{Estimated attribute weights}
 \label{sec:rob-weights}
@@ -242,4 +213,4 @@ The estimation of the attribute weights, which the proposal envisaged, was tried
 
 \section{Summary}
 
-The association between membership changes and changes in market value in the main configuration is robust to the definition of the sample and the outcome, to player fixed effects, and to the inclusion or exclusion of performance controls, and it is not reproduced by a linear summary of the same statistics. It depends on the clustering. It is absent for near-crisp memberships ($m=1.2$), for $K=5$ and, at $m=1.3$, for $K=3$ with shrunk rates, strongest at $m=1.4$ to $1.5$, and weaker when fewer players are assigned to the noise cluster. It varies greatly with the random draw of the clustering, in which it is found against the full baseline in about two thirds of the draws and against the core baseline in about a third, and in which the out-of-sample gain over the core baseline is typically absent. Applying a correction for the number of comparisons leaves no result significant. The evidence is therefore weak and specification-dependent: it points to a small association between the movement from the defender profile to the wide-attacker profile and changes in value, but not to a robust improvement in explanatory power.
+The association between membership changes and changes in market value in the main configuration is robust to the definition of the sample and the outcome (with the exception of the smallest samples), to player fixed effects, and to the exclusion of performance controls, and it is not reproduced by a linear summary of the same statistics. It depends on the clustering: at $m=1.3$ it is absent for five archetypes and, with shrunk rates, for three archetypes, and across the grid it is found much less often with five archetypes than with four; it is weaker for near-crisp and for near-uniform memberships; and it varies by orders of magnitude between random draws, in which it is found against the full baseline in 60 to 73\% of the draws at $m=1.3$ to $1.5$ and against the core baseline in 27 to 37\%, with a typical out-of-sample gain over the core baseline that is not positive. No result survives a correction for the number of comparisons. Above all, it largely disappears when the changes in the position labels are controlled (Section~\ref{sec:results-position}), with bootstrap $p$-values of 0.35 and 0.12. The evidence is therefore weak and specification-dependent, and it points to changes in position labels rather than to additional information in the memberships.

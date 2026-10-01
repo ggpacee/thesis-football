@@ -20,7 +20,7 @@ The unit of observation is a player-season. The sample is built in six steps, wh
 	\small
 	\caption{From the collected data to the analysis sample}
 	\label{tab:sample-steps}
-	\begin{tabular}{lr}
+	\begin{tabular}{p{11.2cm}r}
 		\toprule
 		Step & Rows or player-seasons \\
 		\midrule
@@ -44,7 +44,7 @@ First, the four FBref tables are joined on season, club and name, and this join 
 	\label{tab:sample}
 	\input{thesis_outputs/tables/sample_by_season.tex}
 	\par\smallskip
-	\parbox{0.9\textwidth}{\footnotesize\emph{Note.} Share with value is the share of player-seasons with a Transfermarkt value at the end of the season. Season pairs used are the pairs of consecutive seasons, starting in the season shown, for which the player qualifies in both seasons and has a value at both ends; they form the estimation sample of the valuation stage.}
+	\parbox{0.9\textwidth}{\footnotesize\emph{Note.} Share with value is the share of player-seasons with a Transfermarkt value at the end of the season. Season pairs used are the pairs of consecutive seasons, starting in the season shown, for which the player qualifies in both seasons and has a value at both ends (1,364 pairs in total); three of them lack a team-level control, and the remaining 1,361 form the estimation sample of the valuation stage.}
 \end{table}
 
 \section{Variables}
@@ -87,15 +87,15 @@ Table~\ref{tab:summary} reports descriptive statistics. A typical player-season 
 	\label{tab:summary}
 	\resizebox{\textwidth}{!}{\input{thesis_outputs/tables/summary_statistics.tex}}
 	\par\smallskip
-	\parbox{0.95\textwidth}{\footnotesize\emph{Note.} Statistics of the clustering variables are in their original, unscaled form and refer to the 3,192 player-seasons. The change in log market value and the size of the membership shift refer to the season pairs of the estimation sample and are described in Chapter~\ref{ch:results}.}
+	\parbox{0.95\textwidth}{\footnotesize\emph{Note.} Statistics of the clustering variables are in their original, unscaled form and refer to the 3,192 player-seasons. The change in log market value and the size of the membership shift refer to the 1,364 pairs with values at both ends and to the 1,433 transitions, respectively, and are described in Chapter~\ref{ch:results}.}
 \end{table}
 
 \section{Linking the two sources}
 \label{sec:data-linking}
 
-FBref and Transfermarkt use different identifiers, so players have to be linked by name and birth year. The link is made \emph{within each season}, which keeps the pool of candidates small: for a player-season in FBref, the candidates are the players on the Transfermarkt squad lists of that season whose birth year differs by at most one year. A candidate is accepted if the similarity of the normalised names exceeds a threshold that depends on how informative the birth year is: 70 on a scale up to 100 when the birth years agree, 85 when they differ by one year, and 92 when a birth year is missing. A player is assigned the Transfermarkt identifier that is selected most often across his seasons. Of the 1,507 outfield players, 1,446 (96.0\%) could be linked, which corresponds to 96.2\% of the player-seasons; no player-season of the unlinked players has a value.
+FBref and Transfermarkt use different identifiers, so players have to be linked by name and birth year. The link is made \emph{within each season}, which keeps the pool of candidates small: for a player-season in FBref, the candidates are the players on the Transfermarkt squad lists of that season whose birth year differs by at most one year. A candidate is accepted if the similarity of the normalised names exceeds a threshold that depends on how informative the birth year is: 70 on a scale up to 100 when the birth years agree, 85 when they differ by one year, and 92 when a birth year is missing. A player is assigned the Transfermarkt identifier that is selected most often across his seasons. At the collection step, 1,446 of the 1,507 FBref outfield names (96.0\%) could be linked. In the final sample, after the checks below, 95.4\% of the 3,192 player-seasons have a Transfermarkt identifier and 94.5\% a value; no player-season of the unlinked players has a value.
 
-The linking was checked in three ways, all of which are automatic except the last. First, 32 links with a name score below 92 were listed with the names, birth years and clubs on both sides and inspected manually. Most are nicknames or short forms of the same name at the same club (for example \emph{Oriol} and \emph{Uri} Rosell, or \emph{Álex} and \emph{Alejandro} Grimaldo). One link was rejected because it joined two different players with similar surnames; two others had already been removed in the next step. Second, fifteen Transfermarkt profiles had been linked to two different FBref spellings. In twelve of them both spellings appear in the sample. For eleven of these the two spellings occur in the same season or are clearly different names, which means that they are different players (a nickname such as \emph{Ricardo} and the full name \emph{Ricardo Esgaio}, for example), and the weaker link was discarded so that no player receives another player's values. In one case the spellings never occur in the same season, the names are similar and the birth years are within one year of each other, so the two spellings were treated as one player. After these steps, 1,500 name and birth-year combinations are 1,499 distinct players. Players without a link remain in the clustering sample but cannot enter the valuation stage.
+The linking was checked in two ways. First, 32 links with a name score below 92 were listed with the names, birth years and clubs on both sides and inspected manually; four doubtful cases were also checked with a second AI assistant (Appendix~\ref{app:ai}). Most are nicknames or short forms of the same name at the same club (for example \emph{Oriol} and \emph{Uri} Rosell, or \emph{Álex} and \emph{Alejandro} Grimaldo). One link was rejected because it joined two different players with similar surnames; two others had already been removed in the next step. Second, fifteen Transfermarkt profiles had been linked to two different FBref spellings. In twelve of them both spellings appear in the sample. For eleven of these the two spellings occur in the same season or are clearly different names, which means that they are different players (a nickname such as \emph{Ricardo} and the full name \emph{Ricardo Esgaio}, for example), and the weaker link was discarded so that no player receives another player's values. In one case the spellings never occur in the same season, the names are similar and the birth years are within one year of each other, so the two spellings were treated as one player. After these steps, 1,500 name and birth-year combinations are 1,499 distinct players. Players without a link remain in the clustering sample but cannot enter the valuation stage.
 
 \section{Market values and the outcome}
 \label{sec:data-values}
@@ -104,7 +104,7 @@ For each player and season, the value recorded closest to 1 June of the year in 
 \begin{equation}
 	\Delta\ln V_{it}=\ln V_{i,t+1}-\ln V_{it}.
 \end{equation}
-It is observed only if the player qualifies (at least 200 minutes) in both seasons, so the transitions of players who leave the league, or who play too little, are not observed. There are 1,433 such pairs, and 1,364 of them have a value at both ends; three more are dropped because the team-level control is missing, which leaves 1,361 pairs of 697 players for the estimation. The mean change is $0.07$ (about 7\%) with a standard deviation of $0.63$; in about 14\% of the pairs the value is unchanged, and in about 22\% the player changed club within the league.
+It is observed only if the player qualifies (at least 200 minutes) in both seasons, so the transitions of players who leave the league, or who play too little, are not observed. There are 1,433 such pairs, and 1,364 of them have a value at both ends; three more are dropped because the team-level control is missing, which leaves 1,361 pairs of 697 players for the estimation. The mean change is $0.07$ (about 7\%) with a standard deviation of $0.63$; among the 1,364 pairs with values at both ends, the value is unchanged in 14.4\% and the player changed club within the league in 22.2\%.
 
 \section{Measurement issues}
 \label{sec:data-measurement}

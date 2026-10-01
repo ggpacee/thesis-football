@@ -1,42 +1,3 @@
-\chapter{Programming code}
-\label{app:code}
-
-All analyses were carried out in Python. The programs are submitted as separate files in a ZIP archive. They are listed below in the order in which they are run; each reads the outputs of the previous ones from a common working folder. All random numbers are generated from fixed seeds. The FBref and Transfermarkt data are collected by the programs and are not redistributed.
-
-\begin{table}[ht]
-	\centering
-	\footnotesize
-	\caption{Programming files}
-	\label{tab:code}
-	\begin{tabular}{p{4.6cm}p{10.2cm}}
-		\toprule
-		File & Purpose \\
-		\midrule
-		\texttt{test\_fbref\_collection\_v2.py} & Registers the Primeira Liga in \texttt{soccerdata}, collects four FBref tables (standard, shooting, playing time, miscellaneous) for 2017/18 to 2024/25 and merges them. \\
-		\texttt{collect\_tm\_v2.py} & Collects Transfermarkt squad lists for each club and season, links FBref players to Transfermarkt players within each season, downloads the market value histories and extracts the end-of-season values. \\
-		\texttt{build\_panel.py} & Removes rows that cannot be matched (same-name players at one club), merges the rows of players with several clubs in a season, applies the sample filters, builds the per-90 statistics, shrunk rates and position indicators, and scales the variables. \\
-		\texttt{make\_analysis\_panel.py} & Attaches market values, resolves players linked to two spellings, defines one identity per player and constructs the outcome for consecutive-season pairs. \\
-		\texttt{crosswalk\_audit.py} & Lists the weakest FBref--Transfermarkt links for manual review. \\
-		\texttt{fcmd\_mdnc.py} & Module with the clustering model: type-specific dissimilarities, the fuzzy $C$-medoids algorithm with noise cluster, fixed or estimated weights, the Xie--Beni index and the selection routines. \\
-		\texttt{cluster\_one\_season.py} & Development check of the clustering model on a single season. \\
-		\texttt{align\_and\_select.py} & Clusters every season, aligns the archetypes across seasons with the Hungarian algorithm on the distance between their profiles, builds the membership transitions and the diagnostics used to choose $K$. \\
-		\texttt{pairs\_lib.py} & Module that builds the table of season pairs and the baselines, and the tests used by the regression programs. \\
-		\texttt{regression.py} & Main regressions: baselines, tests, in-sample and cross-validated explanatory power. \\
-		\texttt{bootstrap.py} & Two-stage bootstrap of both stages, resumable, for any configuration. \\
-		\texttt{robustness.py} & Sample and outcome variations, fixed and random effects and the Hausman test. \\
-		\texttt{sensitivity\_and\_benchmark.py} & Sensitivity to $\rho$ and $m$ and the principal component benchmark. \\
-		\texttt{spec\_grid.py} & Re-runs clustering, alignment and tests for the 120 specifications of the grid. \\
-		\texttt{alignment\_check.py} & Checks the consistency of the archetype labels across seasons in all 120 clustering runs. \\
-		\texttt{estimated\_weights\_check.py} & Fits the model with estimated attribute weights for one season in four variants (Appendix~\ref{app:weights}). \\
-		\texttt{seed\_sensitivity.py} & Repeats the clustering stage with 30 random seeds per fuzziness value and the key test each time. \\
-		\texttt{extra\_results.py} & Complete coefficient tables and the baseline without performance statistics. \\
-		\texttt{make\_tables\_figures.py} & Produces the tables and figures of the thesis. \\
-		\bottomrule
-	\end{tabular}
-\end{table}
-
-The estimated-weights results of Appendix~\ref{app:weights} are reproduced by \texttt{estimated\_weights\_check.py}; the options that it uses are part of the model module (\texttt{fixed\_weights=None}, the scaling \texttt{norm} set to \texttt{max} or \texttt{mean}, and the noise rule \texttt{dave}). The programs require Python 3 with \texttt{numpy}, \texttt{pandas}, \texttt{scipy}, \texttt{scikit-learn}, \texttt{statsmodels}, \texttt{linearmodels}, \texttt{joblib}, \texttt{matplotlib}, \texttt{soccerdata}, \texttt{requests}, \texttt{beautifulsoup4}, \texttt{rapidfuzz} and \texttt{unidecode}.
-
 \chapter{Estimated attribute weights}
 \label{app:weights}
 
@@ -66,13 +27,13 @@ Table~\ref{tab:weights} reports the attribute weights that the estimation of \ci
 		\bottomrule
 	\end{tabular}
 	\par\smallskip
-	\parbox{0.95\textwidth}{\footnotesize\emph{Note.} Weights sum to one. Noise is the share of players whose largest membership is in the noise cluster and XB the Xie--Beni index. A solution is called degenerate if one attribute group has a weight above 0.8, if the Xie--Beni index is below $10^{-6}$, or if more than half of the players are in the noise cluster. A weight of one on the positions with a noise share of zero is the case in which the clusters reproduce the position labels exactly. With the maximum, the two success rates dominate; with the mean, positions dominate. The weights used in the thesis are fixed at 0.501, 0.224 and 0.275 (Section~\ref{sec:method-model}). The table is reproduced by \texttt{estimated\_weights\_check.py}.}
+	\parbox{0.95\textwidth}{\footnotesize\emph{Note.} Weights sum to one. Noise is the share of players whose largest membership is in the noise cluster and XB the Xie--Beni index. A solution is called degenerate if one attribute group has a weight above 0.8, if the Xie--Beni index is below $10^{-6}$, or if more than half of the players are in the noise cluster. A weight of one on the positions with a noise share of zero is the case in which the clusters reproduce the position labels exactly. With the maximum, the two success rates dominate; with the mean, positions dominate. The weights used in the thesis are fixed at 0.501, 0.224 and 0.275 (Section~\ref{sec:method-model}).}
 \end{table}
 
 \chapter{Coefficient tables}
 \label{app:coef}
 
-Tables~\ref{tab:coef-core13} and~\ref{tab:coef-full13} report all coefficients of the extended models for the main configuration, with cluster-robust standard errors (by player) that treat the memberships as observed. Statistics are in the scaled form of Section~\ref{sec:data-variables}, in units of their average absolute deviation. The numbering of the archetypes is inherited from the first season and differs between runs. In the main configuration ($m=1.3$) archetype 1 is the defenders (the reference), 2 the strikers, 3 the wide attackers and 4 the central midfielders; the same holds at $m=1.4$ (Table~\ref{tab:coef-core14}). At $m=1.5$ the defenders are again archetype 1, and archetype 2 is the wide attackers, 3 the central midfielders and 4 the strikers.
+Tables~\ref{tab:coef-core13} and~\ref{tab:coef-full13} report all coefficients of the extended models for the main configuration, with cluster-robust standard errors (by player) that treat the memberships as observed. Statistics are in the scaled form of Section~\ref{sec:data-variables}, in units of their average absolute deviation. The numbering of the archetypes is inherited from the first season and differs between runs. In the main configuration ($m=1.3$) archetype 1 is the defenders (the reference), 2 the strikers, 3 the wide attackers and 4 the central midfielders.
 
 \begin{table}[ht]
 	\centering
@@ -90,10 +51,3 @@ Tables~\ref{tab:coef-core13} and~\ref{tab:coef-full13} report all coefficients o
 	\input{thesis_outputs/tables/coef_full_m1.3.tex}
 \end{table}
 
-\begin{table}[ht]
-	\centering
-	\footnotesize
-	\caption{Core baseline with membership changes, $m=1.4$}
-	\label{tab:coef-core14}
-	\input{thesis_outputs/tables/coef_core_m1.4.tex}
-\end{table}
