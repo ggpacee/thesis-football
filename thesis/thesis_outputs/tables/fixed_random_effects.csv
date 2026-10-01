@@ -1,0 +1,3 @@
+rates,K,variation,n,players,core_p,full_p,hausman_p
+shrunk,4,FE/RE Hausman (core),1361,697,0.0176627960272738,,0.0
+shrunk,4,FE/RE Hausman (full),1361,697,,0.0013442016829986,0.0

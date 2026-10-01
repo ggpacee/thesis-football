@@ -1,0 +1,16 @@
+numpy
+pandas
+scipy
+scikit-learn
+statsmodels
+linearmodels
+joblib
+matplotlib
+rapidfuzz
+unidecode
+beautifulsoup4
+lxml
+requests
+soccerdata
+jinja2
+# Python 3.10+; the thesis runs used Python 3.13 (Anaconda). Pin exact versions with `pip freeze` if you need to.

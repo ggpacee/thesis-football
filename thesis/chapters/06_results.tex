@@ -1,0 +1,196 @@
+\chapter{Results}
+\label{ch:results}
+
+This chapter reports the results for the main configuration: shrunk success rates, $K=4$ archetypes, fuzziness $m=1.3$ and noise multiplier $\rho=1.0$ (Section~\ref{sec:method-model}), estimated in one run of the clustering with a fixed random seed. It first shows how the number of archetypes was chosen (Section~\ref{sec:results-selection}), describes the archetypes and the transitions between them (Sections~\ref{sec:results-archetypes} and~\ref{sec:results-transitions}), and then reports the valuation stage (Section~\ref{sec:results-valuation}). The clustering is stochastic, and a single run is one draw from a distribution of possible results; Chapter~\ref{ch:robustness} examines how far the results depend on the choices made in the clustering stage and on the random draw, and the main configuration is not changed in the light of that analysis.
+
+\section{Choosing the number of archetypes}
+\label{sec:results-selection}
+
+Table~\ref{tab:selection} compares $K=3,\dots,6$ for both versions of the rate variables, with every diagnostic averaged over the eight seasons. The choice rests on these diagnostics and on the profiles of the solutions, and was made before the valuation stage was estimated.
+
+\begin{table}[ht]
+	\centering
+	\footnotesize
+	\setlength{\tabcolsep}{4pt}
+	\caption{Diagnostics for the number of archetypes ($m=1.3$, $\rho=1.0$; averages over seasons)}
+	\label{tab:selection}
+	\begin{tabular}{llrrrrrrrr}
+		\toprule
+		Rates & $K$ & Xie--Beni & Noise & Crisp & Stability & Smallest & Align.\ dist. & Ambig. & Persist. \\
+		\midrule
+Shrunk & 3 & 0.82 & 10.5\% & 0.63 & 0.49 & 22.3\% & 3.29 & 4 & 0.72 \\
+Shrunk & 4 & 0.72 & 5.3\% & 0.63 & 0.51 & 13.8\% & 2.39 & 2 & 0.75 \\
+Shrunk & 5 & 1.35 & 4.4\% & 0.55 & 0.51 & 11.1\% & 3.34 & 12 & 0.53 \\
+Shrunk & 6 & 1.24 & 3.4\% & 0.55 & 0.51 & 8.5\% & 3.63 & 16 & 0.53 \\
+Raw & 3 & 0.62 & 9.2\% & 0.66 & 0.50 & 23.7\% & 2.44 & 0 & 0.79 \\
+Raw & 4 & 0.82 & 5.4\% & 0.64 & 0.52 & 13.3\% & 2.21 & 2 & 0.73 \\
+Raw & 5 & 1.33 & 5.5\% & 0.55 & 0.50 & 12.6\% & 2.74 & 9 & 0.60 \\
+Raw & 6 & 1.64 & 3.3\% & 0.54 & 0.48 & 7.2\% & 3.13 & 12 & 0.58 \\
+		\bottomrule
+	\end{tabular}
+	\par\smallskip
+	\parbox{0.95\textwidth}{\footnotesize\emph{Note.} Noise is the share of players whose largest membership is in the noise cluster; Crisp is the share with a largest substantive membership of at least 0.7; Stability is the adjusted Rand index between the best and the other random starts; Smallest is the share of the smallest archetype; Align.\ dist.\ is the mean Manhattan distance between the standardised profiles of matched archetypes in adjacent seasons; Ambig.\ is the number of ambiguous matches over the seven season pairs; Persist.\ is the share of players who keep their largest archetype in the next season. Each row is based on 1,433 transitions.}
+\end{table}
+
+Three of the diagnostics deteriorate steeply beyond $K=4$. Persistence falls from 0.75 at $K=4$ to 0.53 at $K=5$ and at $K=6$ (shrunk rates), the number of ambiguous alignments rises from 2 to 12 and 16, and the Xie--Beni index, which is lowest at $K=4$ among the four values (0.72), rises to 1.35 and 1.24. The medoids show why: in the runs with five clusters, one archetype is represented by players of different types in different seasons, so that its meaning drifts. With $K=3$ the noise cluster takes 10.5\% of the players, twice as many as at $K=4$ (5.3\%), which is below the 12\% reported by \citeA{durso2022robust}, and persistence is no better (0.72). At $K=4$ the smallest archetype contains 14\% of the players, and the medoids remain consistent across seasons (Table~\ref{tab:medoids}). The two versions of the rate variables behave similarly; the shrunk rates give slightly higher persistence and the lowest Xie--Beni index at $K=4$ (0.72 against 0.82), and they are preferred on the grounds given in Section~\ref{sec:data-variables}. The start stability, an adjusted Rand index of about 0.5 at all $K$, is moderate. It reflects that player profiles form a continuum with no sharp natural boundaries, which is the case for fuzzy memberships, but it also means that individual memberships are measured with noise and that different random starts give somewhat different partitions, a point that returns in the valuation stage and in Section~\ref{sec:rob-seeds}.
+
+\section{The archetypes}
+\label{sec:results-archetypes}
+
+Table~\ref{tab:profiles} describes the four archetypes and the noise cluster through the membership-weighted means of the performance statistics and of the position indicators, and Table~\ref{tab:medoids} lists the medoid players. The names of the archetypes are labels chosen here to summarise what the profiles show; the model does not produce them.
+
+\begin{table}[ht]
+	\centering
+	\footnotesize
+	\setlength{\tabcolsep}{3pt}
+	\caption{Archetype profiles (membership-weighted means)}
+	\label{tab:profiles}
+	\resizebox{\textwidth}{!}{%
+	\begin{tabular}{lrrrrrrrrrrrr}
+		\toprule
+		Profile & Share & Goals & Assists & Shots & Crosses & Intercep. & Tackles & SoT rate & Goals/shot & DF & MF & FW \\
+		\midrule
+Defenders & 33.0\% & 0.03 & 0.04 & 0.52 & 1.22 & 1.46 & 1.07 & 0.24 & 0.061 & 0.91 & 0.19 & 0.03 \\
+Strikers & 14.8\% & 0.28 & 0.10 & 2.32 & 1.28 & 0.37 & 0.63 & 0.39 & 0.123 & 0.02 & 0.41 & 0.89 \\
+Wide attackers & 19.2\% & 0.13 & 0.13 & 1.71 & 3.02 & 0.74 & 0.99 & 0.33 & 0.077 & 0.09 & 0.87 & 0.58 \\
+Central midfielders & 27.6\% & 0.06 & 0.07 & 0.98 & 1.82 & 1.18 & 1.33 & 0.26 & 0.057 & 0.21 & 0.91 & 0.14 \\
+Atypical attackers (noise) & 5.4\% & 0.29 & 0.19 & 2.36 & 2.41 & 0.69 & 0.97 & 0.38 & 0.125 & 0.13 & 0.55 & 0.61 \\
+\midrule
+All players &  & 0.11 & 0.08 & 1.26 & 1.82 & 1.04 & 1.05 & 0.30 & 0.077 & 0.38 & 0.57 & 0.33 \\
+		\bottomrule
+	\end{tabular}}
+	\par\smallskip
+	\parbox{0.95\textwidth}{\footnotesize\emph{Note.} Statistics are per 90 minutes (non-penalty goals, assists, shots, crosses, interceptions, tackles won) in their original unscaled form; SoT rate is shots on target per shot; DF, MF and FW are the weighted shares of players with the corresponding position label. Share is the proportion of player-seasons whose largest membership is in the profile. Rates are the raw values, not the shrunk values used in the clustering.}
+\end{table}
+
+\emph{Defenders} (33\% of the player-seasons) combine the lowest shot volume (0.52 per 90) with the highest number of interceptions (1.46), and 91\% of their weight is on the defender label. \emph{Central midfielders} (28\%) have the highest number of tackles won (1.33) with intermediate interceptions (1.18) and a modest attacking output; their weight is 91\% on the midfielder label. \emph{Wide attackers} (19\%) are characterised by crosses (3.02 per 90, against 1.82 for all players), a high shot volume (1.71) and assists (0.13), and they combine the midfielder (87\%) and forward (58\%) labels. \emph{Strikers} (15\%) have the highest goal rate (0.28 per 90), the highest shot volume (2.32), and the best finishing (0.39 of shots on target and 0.12 goals per shot), with a weight of 89\% on the forward label. The \emph{noise} cluster (5\%) collects high-volume attackers: the profile has 2.36 shots, 2.41 crosses, 0.29 goals and 0.19 assists per 90 minutes, all among the highest, together with a mixed position label. These are players whose output does not resemble any single archetype, such as forwards with very high shot volumes.
+
+\begin{table}[ht]
+	\centering
+	\small
+	\caption{Medoid players by season}
+	\label{tab:medoids}
+	\begin{tabular}{lllll}
+		\toprule
+		Season & Defenders & Strikers & Wide attackers & Central midfielders \\
+		\midrule
+2017/18 & Flávio Ramos & Alexandre Guedes & Fábio Espinho & Vítor Gomes \\
+2018/19 & Ivanildo Fernandes & Bryan Róchez & Jorge Correa & Filipe Augusto \\
+2019/20 & Tomás Ribeiro & Iury de Castilho & Silvestre Varela & Julian Weigl \\
+2020/21 & Pedrão & Bryan Róchez & Angel Gomes & Naoufel Khacef \\
+2021/22 & Abdul Mumin & André Luis & Hélder Ferreira & Gaius Makouta \\
+2022/23 & Paulo Eduardo & Emmanuel Boateng & Nicolás Gaitán & João Carvalho \\
+2023/24 & Gonçalo Inácio & Ronie Carrillo & Nuno Gonçalo Moreira & Tomás Händel \\
+2024/25 & Zé Pedro Figueiredo & Dudu & Jordan Holsgrove & Miguel Menino \\
+		\bottomrule
+	\end{tabular}
+	\par\smallskip
+	\parbox{0.95\textwidth}{\footnotesize\emph{Note.} The medoid is the player-season that is most representative of an archetype in a season; it is an actual player.}
+\end{table}
+
+The medoids support the interpretation. Defenders are represented by players with the defender label in all eight seasons. The striker medoids are forwards in six seasons and forwards with a midfield role in two, and those of the wide attackers combine the forward and midfielder labels in seven seasons; the exception is the 2024/25 medoid, who has only the midfielder label, which indicates that this archetype is the least sharply defined. The central-midfielder medoids have the midfielder label in seven seasons. The medoids are not used in the alignment of the archetypes across seasons (Section~\ref{sec:method-alignment}), so their consistency is an independent check of it. Figure~\ref{fig:prevalence} shows that the composition of the league changes little over time: defenders account for 30 to 35\% of the average membership in every season, and the noise cluster is largest in 2024/25 (about 11\%).
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=0.9\textwidth]{thesis_outputs/figures/archetype_prevalence.png}
+	\caption{Average membership in each archetype by season}
+	\label{fig:prevalence}
+\end{figure}
+
+\section{Transitions between archetypes}
+\label{sec:results-transitions}
+
+There are 1,433 pairs of consecutive seasons in which a player has at least 200 minutes in both. Figure~\ref{fig:transitions} shows where players go, classified by their largest membership. Defenders are the most persistent (88\% remain), followed by central midfielders (69\%) and strikers (65\%). Wide attackers are the least persistent of the four substantive archetypes: 54\% remain, 20\% move to central midfielder and 17\% to striker, and 17\% of the strikers move to wide attacker. No player moves between defenders and strikers in either direction, and the movements between the attacking archetypes and the noise cluster are frequent: a third of the players in the noise cluster move to wide attackers and a quarter to strikers. The overall persistence is 75\% (among players with a substantive archetype in both seasons), and the mean size of the shift in the membership vector is 0.36 (Figure~\ref{fig:distributions}). The distribution is right-skewed: there are many small shifts and a tail of up to 1.4.
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=0.75\textwidth]{thesis_outputs/figures/transition_matrix.png}
+	\caption{Transitions between archetypes (row shares and counts)}
+	\label{fig:transitions}
+	\par\smallskip
+	\parbox{0.9\textwidth}{\footnotesize\emph{Note.} Rows give the archetype of largest membership in season $t$, columns that in season $t+1$; entries are shares of the row and, in brackets, numbers of players. Based on 1,433 transitions.}
+\end{figure}
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=0.9\textwidth]{thesis_outputs/figures/distributions.png}
+	\caption{Distribution of the change in log market value and of the size of the membership shift}
+	\label{fig:distributions}
+	\par\smallskip
+	\parbox{0.9\textwidth}{\footnotesize\emph{Note.} Left: change in log market value between the end of season $t$ and $t+1$ for the 1,364 pairs with values at both ends. Right: Euclidean norm of the change in the membership vector over the four archetypes, for the 1,433 transitions.}
+\end{figure}
+
+Figure~\ref{fig:trajectories} illustrates the memberships of six players over time. Some players are stable: the memberships of Gonçalo Inácio are almost entirely in the defender archetype in all five seasons, and João Palhinha is a central midfielder in all four seasons shown, with a temporary defender component in 2018/19 and a wide-attacker component in 2021/22. Others move: Luis Díaz is mainly a striker with a wide-attacker component in 2019/20, mainly a wide attacker in 2020/21, and again a striker with a substantial noise component in 2021/22, and Otávio moves from central midfielder to wide attacker from 2020/21. Rafa Silva and Paulinho, attacking players with high shot volumes, move among the wide attacker, striker and noise components from one season to the next. Two readings are possible for such movements, a genuine change of role or of form and noise in the estimated memberships, and the data cannot separate them; this is the main reason why the valuation stage has to account for estimation uncertainty.
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=\textwidth]{thesis_outputs/figures/player_trajectories.png}
+	\caption{Memberships of selected players by season}
+	\label{fig:trajectories}
+	\par\smallskip
+	\parbox{0.9\textwidth}{\footnotesize\emph{Note.} The players were chosen for illustration. Empty slots are seasons in which the player is not in the sample (fewer than 200 minutes, or not in the Primeira Liga).}
+\end{figure}
+
+\section{Transitions and changes in market value}
+\label{sec:results-valuation}
+
+\subsection{The baseline}
+
+The estimation sample contains 1,361 season pairs of 697 players: the 1,364 pairs with a value at both ends, less three for which the team-level control is missing. The core baseline explains 45\% of the variance of the change in log value in sample (adjusted $R^2$ of 0.448) and 44\% out of sample in cross-validation with folds that keep a player's pairs together (0.436). This is considerable for a model of changes. It rests on standard determinants only: age, minutes, position, team form, a change of club, and goals and assists. The coefficients (Appendix~\ref{app:coef}, Table~\ref{tab:coef-core13}) have the expected signs. Value growth falls with age (a coefficient of $-0.16$ per year, with a small positive curvature), it rises with playing time, both in level and in change (0.19 and 0.37 per unit of log minutes), with the change in the points per match of the team (0.29), and with goals per 90 minutes in level and in change (0.069 and 0.061 per average absolute deviation of the statistic, which is 0.11 goals per 90 minutes). The effects of assists per 90 minutes ($p=0.06$ for the change), of the position indicators, of the level of team form and of a change of club within the league are not significant. The ten statistics that the full baseline adds do not raise the adjusted $R^2$ (0.448) and lower the out-of-sample $R^2$ to 0.422, so goals and assists per 90 minutes carry the performance information that is relevant for value changes in this sample, and the full baseline is mainly a tool to make the test demanding.
+
+\subsection{Main result}
+
+Table~\ref{tab:main} reports the extended model with the membership changes. The reference archetype is the defenders, which have the largest average membership. All four coefficients are negative: a shift of membership from defenders to any other archetype or to the noise cluster is associated with a smaller increase in value. The coefficient of the wide attackers stands out: $-0.22$ against the core baseline and $-0.31$ against the full baseline, which corresponds to a difference in value of about $-2.1$ and $-3.0$ per cent for a shift of 0.10 in membership from defenders to wide attackers, and it is significant with bootstrap standard errors ($p=0.014$ and $p=0.002$). The coefficients of the strikers ($-0.04$ and $-0.11$), of the central midfielders ($-0.10$ and $-0.14$) and of the noise cluster ($-0.14$ and $-0.24$) are not individually significant.
+
+\begin{table}[ht]
+	\centering
+	\small
+	\caption{Membership changes and the change in log market value: main configuration}
+	\label{tab:main}
+	\begin{tabular}{lrrrrrr}
+		\toprule
+		 & \multicolumn{3}{c}{Core baseline} & \multicolumn{3}{c}{Full baseline} \\
+		\cmidrule(lr){2-4}\cmidrule(lr){5-7}
+		Change in membership of & Coef. & Boot.\ SE & $p$ & Coef. & Boot.\ SE & $p$ \\
+		\midrule
+Strikers & -0.036 & 0.107 & 0.738 & -0.114 & 0.125 & 0.363 \\
+Wide attackers & -0.216 & 0.088 & 0.014 & -0.308 & 0.101 & 0.002 \\
+Central midfielders & -0.104 & 0.079 & 0.188 & -0.140 & 0.087 & 0.108 \\
+Noise (atypical attackers) & -0.141 & 0.147 & 0.340 & -0.239 & 0.183 & 0.192 \\
+		\bottomrule
+	\end{tabular}
+	\par\smallskip
+	\parbox{0.95\textwidth}{\footnotesize\emph{Note.} Dependent variable: change in log market value from the end of season $t$ to $t+1$. Reference archetype: defenders. Each coefficient is the association of a full shift of membership from defenders to the archetype named, with the controls of the baseline held fixed (see Section~\ref{sec:method-valuation}); a shift of 0.10 corresponds to one tenth of the coefficient. Bootstrap standard errors and $p$-values are based on 500 replications of both stages (Section~\ref{sec:method-bootstrap}). The Wald test of the four coefficients gives $p=0.079$ (core) and $p=0.015$ (full). $N=1{,}361$ pairs of 697 players.}
+\end{table}
+
+The joint test is significant against the full baseline and borderline against the core baseline. The Wald test of the four coefficients with the bootstrap covariance matrix gives $p=0.015$ against the full baseline and $p=0.079$ against the core baseline; with cluster-robust standard errors that treat the memberships as observed, the values are 0.002 and 0.027. Table~\ref{tab:comparison} adds the gains in explanatory power. Adding the membership changes raises the adjusted $R^2$ by 0.34 percentage points against the core baseline and by 0.56 points against the full baseline, and the cross-validated out-of-sample $R^2$ by 0.08 and 0.33 points, with an improvement in 73\% and 93\% of the cross-validation repetitions. These gains are small. The size of the shift and the change in entropy, which summarise the direction-free movement and the change in specialisation, are not significant, and the levels of the memberships at the start of the period do not help either: it is the direction of the movement, and not its size or the starting point, that is associated with the change in value. A linear summary of the same statistics does not reproduce the association: the first four principal components of the twelve statistics are jointly insignificant against the core baseline ($p=0.48$; Chapter~\ref{ch:robustness}).
+
+\begin{table}[ht]
+	\centering
+	\small
+	\caption{Explanatory power of alternative summaries of the membership dynamics: main configuration}
+	\label{tab:comparison}
+	\begin{tabular}{lrrrrrr}
+		\toprule
+		 & \multicolumn{3}{c}{Core baseline} & \multicolumn{3}{c}{Full baseline} \\
+		\cmidrule(lr){2-4}\cmidrule(lr){5-7}
+		Added to the baseline (number of variables) & $p$ & $\Delta\bar R^2$ & $\Delta R^2_{oos}$ & $p$ & $\Delta\bar R^2$ & $\Delta R^2_{oos}$ \\
+		\midrule
+Membership changes $\Delta u$ (4 variables) & 0.027 & +0.34 & +0.08 & 0.002 & +0.56 & +0.33 \\
+Size of the shift (1) & 0.396 & -0.01 & -0.07 & 0.395 & -0.01 & -0.07 \\
+Change in entropy (1) & 0.981 & -0.04 & -0.09 & 0.513 & -0.02 & -0.07 \\
+Membership levels $u_t$ (4) & 0.863 & -0.11 & -0.33 & 0.847 & -0.10 & -0.33 \\
+Levels and changes (8) & 0.080 & +0.32 & -0.14 & 0.009 & +0.52 & +0.09 \\
+		\bottomrule
+	\end{tabular}
+	\par\smallskip
+	\parbox{0.95\textwidth}{\footnotesize\emph{Note.} $p$ is the cluster-robust Wald $p$-value of the added block, treating the memberships as observed. $\Delta\bar R^2$ is the change in adjusted $R^2$ and $\Delta R^2_{oos}$ the change in cross-validated out-of-sample $R^2$ (five folds grouped by player, 30 repetitions), both in percentage points. $N=1{,}361$.}
+\end{table}
+
+\subsection{Player effects}
+
+Player-specific characteristics that are not in the baseline could be correlated with the memberships. The Hausman test rejects the random-effects model in favour of fixed effects for both baselines ($p<0.001$), as expected, since talent and reputation are likely to be correlated with the profile of a player. The fixed-effects estimates rest on the players with at least two season pairs, a subsample of about 350 players. In this model the membership changes remain jointly significant: $p=0.018$ against the core baseline and $p=0.001$ against the full baseline. Age and its square are not identified together with player and season effects and are left out of these estimates (Section~\ref{sec:method-valuation}).
+
+\section{Summary}
+
+In the main configuration, the clustering stage yields four interpretable archetypes of outfield players (defenders, central midfielders, wide attackers and strikers) and a small noise cluster of high-volume attackers. Archetypes are reasonably persistent across seasons (75\% of players keep their archetype), but the memberships of attacking players are volatile. In the valuation stage, a model with age, playing time, position, team form, club change and goals and assists explains 45\% of the variance of value changes. The membership changes are jointly significant against the full baseline (bootstrap $p=0.015$) and borderline against the core baseline ($p=0.079$), and they add 0.3 to 0.6 percentage points to the adjusted $R^2$ and 0.1 to 0.3 points to the out-of-sample $R^2$. The association is concentrated in the shift from the defender profile to the wide-attacker profile and is present with player fixed effects; it is not present for the size of the shift or the change in entropy. This is the result of one run of a stochastic clustering, with one setting of the tuning parameters. The next chapter shows how far it carries over to other settings and to other random draws.

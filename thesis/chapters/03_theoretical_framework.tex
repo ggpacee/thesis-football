@@ -1,0 +1,46 @@
+\chapter{Theoretical Framework}
+\label{ch:theory}
+
+This chapter sets out why the movement of a player through a space of performance archetypes might be associated with changes in his market value beyond what individual statistics capture, and why it might not. It also fixes the hypothesis, the interpretation of the coefficients, and the logic of the baselines against which the added explanatory power is judged.
+
+\section{Memberships as soft roles}
+\label{sec:theory-memberships}
+
+Fuzzy clustering assigns each player-season $(i,t)$ a membership vector $u_{it}=(u_{i1t},\dots,u_{i,K+1,t})$ over $K$ substantive archetypes and one noise cluster. The entries lie between zero and one and sum to one. The vector is the primary object of analysis, and it should be read for what it is: a set of continuous \emph{similarity scores} that describe how closely the statistical profile of a player in a season resembles each archetype, represented by an actual player, the medoid. It is not a probability that the player ``is'' of a given type, nor a latent trait in a structural sense. A membership of $0.7$ in one archetype and $0.3$ in another says that the season's statistics are much closer to the first but retain a clear affinity with the second. This reading suits football, in which roles are rarely exclusive: a midfielder may defend and carry the ball forward in the same season. It also explains the role of the noise cluster. A player whose profile is far from every archetype, for example a forward with an exceptional shot volume, receives most of his membership there.
+
+\section{Why transitions may be informative}
+\label{sec:theory-why}
+
+A \emph{membership transition} is the change in the membership vector between two consecutive seasons, $\Delta u_{it}=u_{i,t+1}-u_{it}$. It records the direction and the size of a player's movement through the archetype space. The claim that such movements are associated with changes in market value beyond individual statistics rests on three arguments.
+
+\paragraph{Forward-looking valuation.} A market value is an estimate of the present value of what a player is expected to contribute in the future, not a reward for past output. The direction of a player's movement, for instance towards a more attacking or a more central role, may inform expectations about the persistence of his output in ways that a single season's statistics do not. Two players with the same goals and assists may be moving in different directions, one consolidating a role and the other drifting away from one.
+
+\paragraph{Role-specific valuation.} Position is a standard control in valuation studies \cite{franceschi2024determinants,poli2024statistical}, because markets price roles differently. A change of role changes the group of players against which a player is evaluated. The change in value that follows a move from one archetype to another need not equal what the change in his raw statistics would imply under a linear specification.
+
+\paragraph{Nonlinear aggregation.} Memberships are nonlinear, low-dimensional summaries of many statistics: they depend on distances to prototypes, on all variables jointly, and on the relative position of a player among the other players of the season. Their changes can therefore reflect combinations and interactions of changes in several statistics that a linear specification with individual statistics does not represent.
+
+\section{Why they may not be}
+\label{sec:theory-why-not}
+
+There are also reasons to expect little. First, memberships are deterministic functions of the same performance statistics, together with positions, that valuation models already use. Any information they contain beyond a linear specification must therefore come from the nonlinear way in which they combine those statistics, and a sufficiently flexible specification of the statistics could absorb it. Second, memberships are \emph{estimated} quantities. The difference of two estimated memberships is noisier than either, and the use of estimated regressors in a second stage has two consequences: conventional standard errors ignore the first-stage uncertainty \cite{pagan1984econometric}, and noise in a regressor attenuates its coefficient towards zero. Third, the outcome is measured with considerable noise. Transfermarkt values are crowd estimates that are updated only every six to twelve months and are thinner for smaller leagues \cite{muller2017beyond}, so real changes in value are recorded with delay and in steps. Finally, values respond to many things that are not observed here, such as contract length, injuries and international appearances \cite{franceschi2024determinants,poli2024statistical}.
+
+\section{Hypothesis and interpretation}
+\label{sec:theory-hypothesis}
+
+Let $\Delta\ln V_{it}$ denote the change in the logarithm of a player's market value between the end of season $t$ and the end of season $t+1$, and let $z_{it}$ be a vector of controls. The conceptual model is
+\begin{equation}
+	\Delta\ln V_{it} = z_{it}'\beta + \Delta u_{it}'\theta + \varepsilon_{it}.
+	\label{eq:conceptual}
+\end{equation}
+Because the memberships of a player sum to one in each season, the elements of $\Delta u_{it}$ sum to zero, and one element has to be omitted from \eqref{eq:conceptual}. The omitted element defines a \emph{reference archetype}, which is the most common archetype in the sample. Each coefficient in $\theta$ then measures the association of the change in value with shifting membership from the reference archetype to the archetype in question, holding the controls fixed. Because a full shift of one unit is never observed in practice, coefficients are read for a shift of $0.10$: a coefficient $\theta_k$ corresponds to a proportional change in market value of approximately $100\,(e^{0.1\,\theta_k}-1)$ per cent. The coefficients are comparable across archetypes only relative to the common reference.
+
+The hypothesis concerns the block of coefficients and not individual archetypes, because there is no prior reason to expect a particular sign for each:
+\begin{equation}
+	H_0:\ \theta=0 \qquad\text{against}\qquad H_1:\ \theta\neq 0,
+\end{equation}
+given the controls. A rejection indicates that membership transitions carry explanatory information about changes in value over and above the controls, and a failure to reject indicates that they do not. In both cases the statement is associational.
+
+\section{Baselines and the overlap with performance statistics}
+\label{sec:theory-baselines}
+
+The memberships are constructed from twelve performance statistics, which are also the natural controls in a valuation model. The test in \eqref{eq:conceptual} is therefore only informative if the controls are chosen with care. Two baselines are used. The \emph{core} baseline follows the determinants that are most consistently reported in the literature \cite{franceschi2024determinants}: age and its square, playing time and its change, playing position, the points per match of the team while the player is on the pitch and their change, an indicator of a change of club within the league, season effects, and goals and assists per 90 minutes in their level and in their change. The \emph{full} baseline adds the level and the change of all twelve statistics from which the memberships are built. Against the full baseline, the transitions can contribute only through the nonlinear way in which they combine these statistics, which is exactly the claim in Section~\ref{sec:theory-why}. A linear summary of the statistics cannot add anything to the full baseline by construction, since it is a linear combination of variables that the baseline already contains; principal component scores are therefore compared with the transitions against the core baseline only (Chapter~\ref{ch:robustness}).

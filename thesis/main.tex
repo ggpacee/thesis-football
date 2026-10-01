@@ -1,0 +1,71 @@
+% Master thesis -- Gonçalo Passinhas. Same template and preamble as the proposal; chapters live in chapters/.
+\documentclass[a4paper,11pt]{report}
+
+% FILL OUT THE DETAILS BELOW:
+\author{Gonçalo Passinhas}
+\title{Tracking Player Profile Evolution Through Robust Fuzzy Clustering: A Longitudinal Study of Transfer Market Valuation in the Primeira Liga}
+% \date{An optional custom date, the default is today}
+\newcommand{\studentnumber}{732518}
+\newcommand{\program}{Data Science \& Marketing Analytics}
+\newcommand{\supervisor}{Carlo Cavicchia}
+\newcommand{\secondassesor}{Sean Brüggemann}
+
+\usepackage[british]{babel} % Use British English
+\usepackage[onehalfspacing]{setspace} % Increase line spacing
+\usepackage[margin=2.5cm]{geometry} % Modify margins
+\usepackage{graphicx,booktabs,apacite} % Packages for images, tables, and APA citations
+\usepackage{eurosym} % For \euro symbol
+\usepackage{amsmath,amssymb} % Mathematics
+\usepackage{array} % Table columns
+
+\begin{document}
+
+\begin{titlepage}
+\makeatletter
+\begin{center}
+	\textsc{Erasmus University Rotterdam}
+	\par \textsc{Erasmus School of Economics}
+	\par Master Thesis \program
+
+	\vfill \hrule height .08em \bigskip
+	\par\huge\@title\bigskip
+	\par\Large\@author\,(\studentnumber)\bigskip
+	\hrule height .08em\normalsize
+	
+	\vfill
+	\includegraphics[width=\textwidth,height=0.15\textheight,keepaspectratio]{eur} % The EUR logo
+	\vfill
+	
+	\begin{tabular}{ll}
+		\toprule
+		Supervisor: & \supervisor\\
+		Second assessor: & \secondassesor\\
+		Date final version: & \@date\\
+		\bottomrule
+	\end{tabular}
+	
+	\vfill
+	The content of this thesis is the sole responsibility of the author and does not reflect the view of the supervisor, second assessor, Erasmus School of Economics or Erasmus University.
+\end{center}
+\makeatother
+\end{titlepage}
+
+\tableofcontents
+
+\input{chapters/01_introduction}
+\input{chapters/02_literature_review}
+\input{chapters/03_theoretical_framework}
+\input{chapters/04_data}
+\input{chapters/05_methodology}
+\input{chapters/06_results}
+\input{chapters/07_robustness}
+\input{chapters/08_discussion}
+\input{chapters/09_conclusion}
+
+\bibliographystyle{apacite}
+\bibliography{MyReferencesFile} % References are stored in MyReferencesFile.bib
+
+\appendix
+\input{chapters/A_appendix}
+
+\end{document}

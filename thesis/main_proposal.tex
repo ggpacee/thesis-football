@@ -1,0 +1,170 @@
+% This template can serve as a starting point for your MSc thesis. You are allowed to modify it as long as you adhere to the requirements from the Thesis Manual.
+\documentclass[a4paper,11pt]{report}
+
+% FILL OUT THE DETAILS BELOW:
+\author{Gonçalo Passinhas}
+\title{Tracking Player Profile Evolution Through Robust Fuzzy Clustering: A Longitudinal Study of Transfer Market Valuation in the Primeira Liga}
+% \date{An optional custom date, the default is today}
+\newcommand{\studentnumber}{732518}
+\newcommand{\program}{Data Science \& Marketing Analytics}
+\newcommand{\supervisor}{Carlo Cavicchia}
+\newcommand{\secondassesor}{Sean Brüggemann}
+
+\usepackage[british]{babel} % Use British English
+\usepackage[onehalfspacing]{setspace} % Increase line spacing
+\usepackage[margin=2.5cm]{geometry} % Modify margins
+\usepackage{graphicx,booktabs,apacite} % Packages for images, tables, and APA citations
+\usepackage{eurosym} % For \euro symbol
+
+% ADD YOUR OWN PACKAGES HERE
+% Hint: \usepackage{amsmath,amsfonts,hyperref} imports some frequently used packages
+
+\begin{document}
+
+\begin{titlepage}
+\makeatletter
+\begin{center}
+	\textsc{Erasmus University Rotterdam}
+	\par \textsc{Erasmus School of Economics}
+	\par Master Thesis \program
+
+	\vfill \hrule height .08em \bigskip
+	\par\huge\@title\bigskip
+	\par\Large\@author\,(\studentnumber)\bigskip
+	\hrule height .08em\normalsize
+	
+	\vfill
+	\includegraphics[width=\textwidth,height=0.15\textheight,keepaspectratio]{eur} % The EUR logo, but this could also be another image
+	\vfill
+	
+	\begin{tabular}{ll}
+		\toprule
+		Supervisor: & \supervisor\\
+		Second assessor: & \secondassesor\\
+		Date final version: & \@date\\
+		\bottomrule
+	\end{tabular}
+	
+	\vfill
+	The content of this thesis is the sole responsibility of the author and does not reflect the view of the supervisor, second assessor, Erasmus School of Economics or Erasmus University.
+\end{center}
+\makeatother
+\end{titlepage}
+
+\tableofcontents
+
+\chapter{Introduction}
+
+Professional football has undergone a fundamental transformation over the past three  decades, evolving from a sport into a global industry of extraordinary economic scale.  The transfer market alone surpassed \euro{}7 billion in international fees in 2019  \cite{franceschi2024determinants}, placing enormous financial stakes on player recruitment decisions. Despite this scale, transfer decisions remain partly subjective  — clubs frequently overpay for players who underperform, or overlook talents whose  value is not captured by conventional scouting methods. As \cite{muller2017beyond} argue, data analytics has emerged as a critical tool to support more rational and evidence-based decision-making, offering objective and replicable estimates of player value that complement traditional expert judgement.
+
+One of the most active areas of football analytics is player profiling, the characterisation of players by their performance attributes to support scouting, squad construction, and tactical planning. Clustering methods have proven particularly valuable here, grouping players into meaningful performance profiles without relying on traditional positional labels, which often fail to capture the full complexity of a modern player's role. \cite{durso2022robust} propose a robust fuzzy C-medoids clustering model for mixed-type data that simultaneously handles numerical performance statistics, success rates, and categorical positional information, assigning each player a graded degree of membership across clusters rather than forcing a binary assignment. \cite{akhanli2023clustering} further develop this line of work by introducing composite cluster validity indexes and applying the framework across eight European leagues. Together, these contributions establish fuzzy clustering of mixed-type player data as the methodological state of the art for football player profiling.
+
+However, a fundamental limitation runs through virtually all existing work: the analyses are cross-sectional. Players are clustered at a single point in time, producing a static snapshot that ignores how player roles and performance characteristics evolve over time. A player who clusters as a defensive midfielder in one season may transition toward a more progressive profile in the next, and these transitions may carry meaningful information that cross-sectional analysis discards. Only a small number of studies have attempted a longitudinal dimension, and those that have remain limited in scope. \cite{pacifico2025fuzzy} applies fuzzy clustering to a panel of 27 hand-picked forwards across twelve seasons, but the dataset is synthetically constructed, covers only offensive players, and makes no connection to market outcomes. Crucially, \cite{durso2022robust} themselves explicitly identify the temporal extension of their framework and the inclusion of financial variables as priority directions for future research. No study to date has combined a robust mixed-data fuzzy clustering approach with a longitudinal panel structure and linked the resulting evolution in cluster memberships to transfer market valuation changes.
+
+This thesis tries to address that gap directly. Applying the fuzzy C-medoids framework of \cite{durso2022robust} to Primeira Liga player performance data across multiple consecutive seasons, it tracks how player profiles evolve over time and examines whether these longitudinal transitions are associated with changes in transfer market valuations beyond what individual performance metrics alone capture. The Primeira Liga is chosen deliberately: it is a league that has received comparatively little attention in the quantitative football analytics literature, strengthening the originality of the contribution, while data availability through FBref and Transfermarkt makes the analysis empirically feasible. The central research question is therefore: \textit{do longitudinal transitions in fuzzy cluster membership, derived from a robust mixed-data clustering model applied to Primeira Liga player performance statistics across consecutive seasons, have incremental explanatory power for changes in transfer market valuations beyond what individual performance metrics alone capture?}
+
+It is important to clarify upfront that this thesis pursues an associational and explanatory objective. The empirical design is observational, no causal identification strategy is introduced, and the goal is to test whether cluster membership transitions carry statistically significant incremental explanatory power for market value changes within an established valuation framework.
+
+The relevance of this research operates on two levels. Scientifically, it contributes to the unsupervised learning literature in sports analytics by introducing a longitudinal dimension to fuzzy clustering of mixed-type data, and to the sports economics literature by proposing cluster membership transitions as a novel class of explanatory variables for market valuation. Practically, the findings are of direct relevance to football clubs, sporting directors, and player agents. A framework connecting the trajectory of a player's performance profile to their market value offers an objective basis for identifying undervalued players whose developmental direction is not yet reflected in their current statistics. The Primeira Liga context adds further practical relevance, as a league that regularly exports talent to larger European markets.
+
+
+\chapter{Literature Review}
+
+\subsection{Fuzzy Clustering: Methodological Foundations}
+
+Cluster analysis refers to a family of unsupervised methods that partition a dataset into groups of internally similar observations. Classical hard clustering algorithms assign each observation exclusively to a single cluster, imposing an artificial binary structure on data that may be inherently overlapping. Fuzzy clustering relaxes this constraint by allowing each observation to hold a graded degree of membership across all clusters simultaneously, with values ranging between zero and one and summing to unity. This soft partitioning is particularly well suited to football, where the distinction between player roles is rarely absolute.
+
+The theoretical foundations were established by \cite{bezdek1984fcm}, who formalised the Fuzzy C-Means (FCM) algorithm. FCM minimises a generalised least-squares objective function through iterative alternation between updating cluster prototypes and membership values. A key parameter is the fuzziness exponent $m$, which controls the degree of overlap between clusters: values close to one produce near-hard partitions, while higher values yield increasingly soft memberships. This foundational framework underpins the methodology adopted in this thesis.
+
+\subsection{Fuzzy Clustering Applied to Football Player Profiling}
+
+The application of clustering to football player data has grown substantially over the past decade. Early contributions relied on hard clustering and limited variable sets. \cite{behravan2019finding} apply a particle swarm optimisation algorithm to spatial ball-touch data across approximately 4,900 matches, identifying eight positional roles, but the approach ignores performance statistics entirely. \cite{narizuka2019clustering} develop a hierarchical clustering algorithm applied to Delaunay network representations of team formations, capturing within-match spatial dynamics at the team level rather than individual profiling.
+
+The methodological state of the art is established by \cite{durso2022robust}, who propose the FCMd-MD-NC model for mixed-type data, constructing type-specific dissimilarity measures for numerical, rate-based, and categorical variables and combining them through endogenously estimated weights. A noise cluster absorbs outliers, and medoids rather than centroids serve as cluster representatives, preserving interpretability. Applied to Serie A 2018/19, the model yields three meaningful player archetypes, with fuzzy memberships revealing that many players occupy intermediate positions. The authors explicitly flag the temporal extension of their framework and inclusion of financial variables as future work. \cite{akhanli2023clustering} complement this by introducing an aggregated composite validity index combining homogeneity, separation, stability, and entropy, and by validating solutions through a survey of football experts.
+
+\subsection{The Longitudinal Gap}
+
+Despite methodological advances, virtually all existing work is cross-sectional. Player development is inherently dynamic, as roles shift with age, club changes alter tactical contexts, and performance trajectories diverge among players who appear statistically similar at a single moment. \cite{pacifico2025fuzzy} represents the most direct attempt to address this, applying fuzzy clustering longitudinally to 27 forwards across twelve seasons. The study confirms that cluster transitions are detectable over time but suffers critical limitations: the sample is small and synthetically constructed, covers only forwards, uses exclusively numerical variables, and draws no connection to market outcomes. Notably, the transition vector in that study is defined as a simple difference in membership vectors, which captures both the direction and magnitude of change; alternative definitions, such as the Euclidean norm of the difference vector or entropy-based measures of membership dispersion, will be considered as robustness checks in the present thesis.
+
+One might ask whether dynamic clustering or state-space models could more naturally address the longitudinal gap by explicitly modelling temporal dependence across seasons. While such approaches are theoretically appealing, they typically require strong parametric assumptions about the structure of temporal dependence that are difficult to justify with annual seasonal data, and they produce solutions that are considerably harder to interpret and compare against the existing cross-sectional literature. The independent per-season approach with post-processing alignment adopted here is therefore preferred on grounds of transparency and interpretability. The longitudinal mixed-data clustering gap therefore remains open.
+
+\subsection{Transfer Market Valuation}
+
+\cite{franceschi2024determinants} conduct the most comprehensive systematic review of the football player valuation literature, analysing 29 peer-reviewed studies and 111 model specifications. They identify six categories of valuation drivers: time, labour, performance, player characteristics, club characteristics, and popularity. It is also highlighted that a time-series approach and business motivation behind transfers could be a future direction, both of which align directly with this thesis. \cite{muller2017beyond} demonstrate that data-driven estimates of market value are comparably accurate to Transfermarkt's crowd-sourced valuations, validating Transfermarkt as a reliable empirical proxy and identifying minor-league data (such as the Primeira Liga) as a priority for future work. \cite{poli2024statistical} build a regression model on 8,389 worldwide transfers achieving an $R^2$ of 84.8\%, confirming that transfer fee formation is statistically modellable and identifying contract duration, age, position, and club quality as principal determinants. This baseline is what this thesis tests: if there is an incremental contribution of cluster transitions.
+
+\subsection{Synthesis}
+
+It is worth clarifying why fuzzy clustering is preferred over alternative approaches that could in principle address the same gap. Dimensionality reduction methods such as Principal Component Analysis (PCA) produce linear combinations of variables that summarise variance efficiently, but they do not yield soft group assignments or interpretable player archetypes. The resulting factors are mathematical constructs rather than economically meaningful profiles. Dynamic and time-series clustering methods explicitly model temporal dependence but require strong parametric assumptions that are difficult to justify with annual seasonal observations and produce solutions that are considerably harder to align with the cross-sectional literature. The FCMd-MD-NC framework of \cite{durso2022robust} is the only approach that simultaneously handles mixed variable types, produces interpretable and economically meaningful player archetypes, accommodates partial role membership, and has been validated in a football context. It is therefore the most appropriate tool for the research question posed here.
+
+
+\chapter{Theoretical Framework and Methodology}
+
+\subsection{Theoretical Framework}
+
+The theoretical foundation of this thesis rests on fuzzy partitioning, which departs from the classical assumption that observations belong exclusively to a single group. In football, players do not occupy rigid performance categories: a central midfielder may combine defensive solidity with progressive ball-carrying, exhibiting characteristics that span distinct archetypes. Fuzzy clustering accommodates this ambiguity by assigning each player a vector of membership degrees across all clusters, continuous values between zero and one, summing to unity, which constitute the primary object of analysis. Economically, these membership degrees should be interpreted as continuous similarity scores reflecting the degree to which a player's observed performance pattern resembles each latent archetype, rather than as hard role assignments or latent traits in a structural sense. A membership of 0.7 in cluster $k$ and 0.3 in cluster $j$ indicates that a player's statistical profile is substantially more consistent with archetype $k$ but retains meaningful affinity with archetype $j$.
+
+The framework adopted follows \cite{durso2022robust}, who extend fuzzy C-medoids to mixed-type data. Football player data is inherently mixed: it contains numerical performance counts, rate-based success percentages, and categorical positional information. The FCMd-MD-NC model addresses this by computing type-specific dissimilarity measures for each variable group, combined through endogenously estimated weights that reflect the informational contribution of each attribute type. Medoids ensure interpretable cluster representatives, and a noise cluster absorbs outliers.
+
+The longitudinal dimension is theoretically motivated by the recognition that player development is dynamic. The fuzzy membership vector assigned to a player in each season captures their position in the latent performance space at that point in time, and the trajectory of this vector across seasons constitutes a longitudinal membership transition. The central theoretical claim of this thesis is that these transitions carry information about player development that is not fully captured by individual performance statistics alone, and that this information may be associated with how the transfer market values players. The justification for this claim rests on two arguments. First, membership transitions are nonlinear, multivariate summaries that capture interactions and temporal structure invisible in individual statistics: two players with identical goals and assists totals may be on fundamentally different developmental trajectories, one transitioning toward a more complete and versatile profile, the other regressing from a peak. Second, the transfer market is forward-looking. Clubs pay not only for current output but for projected future contribution, and the direction of a player's developmental trajectory, as captured by cluster transitions, is precisely the kind of information that informs those projections beyond what any single statistic reveals.
+
+The economic interpretation of the transition coefficients deserves explicit clarification. A membership transition vector entry of $+1$ in cluster $k$ would represent a complete reallocation of a player's membership toward archetype $k$, which is the theoretical maximum transition. In practice, transitions will be fractions of one, reflecting partial movements between archetypes. The coefficient on a transition variable should therefore be interpreted as the change in log market value associated with a full reallocation of membership toward that archetype, with partial transitions interpreted proportionally. This framing makes the coefficients directly comparable across clusters and economically meaningful.
+
+The valuation framework draws on \cite{franceschi2024determinants}, \cite{poli2024statistical}, and \cite{muller2017beyond}, treating market value as a function of observable characteristics, and augments it with cluster membership transitions as additional explanatory variables. The research design is explicitly associational and observational, no causal identification strategy is introduced, and the goal is to test whether transitions carry statistically significant incremental explanatory power for market value changes within this established framework.
+
+
+\subsection{Methodology}
+
+The empirical analysis proceeds in two sequential stages. In the \textbf{clustering stage}, the FCMd-MD-NC model of \cite{durso2022robust} is applied independently to each season of Primeira Liga data. Players with fewer than 200 minutes played are excluded, following \cite{durso2022robust}, as are goalkeepers. The number of clusters $C$ and fuzziness parameter $m$ are selected using the Xie-Beni criterion across a candidate grid.
+
+Since independent clustering solutions applied to different seasons may produce clusters in arbitrary orders, a post-processing alignment step is required to ensure longitudinal comparability. Alignment is implemented as follows: a pairwise dissimilarity matrix between the medoid profiles of all clusters across adjacent seasons is constructed using the same type-specific distance measures employed in the clustering stage. The Hungarian algorithm is then applied to this matrix to find the optimal one-to-one assignment of clusters across seasons, that is, the assignment that minimises to be tal cross-season medoid dissimilarity. In cases of ambiguous matches, where two or more clusters have very similar medoid profiles across seasons, sensitivity checks will be conducted by comparing results under alternative alignment solutions. It is acknowledged that independent per-season clustering ignores temporal dependence in the evolution of player profiles, which is a limitation relative to dynamic clustering approaches; however, this design choice is justified by its transparency, interpretability, and direct comparability with the cross-sectional literatureupon.
+
+For each player observed in at least two consecutive seasons, a membership transition vector is computed as the difference between their fuzzy membership vectors in seasons $t+1$ and $t$. This vector captures both the direction and magnitude of movement through the latent performance space. Summary statistics of this transition — including the Euclidean norm of the difference vector, which captures the overall magnitude of the shift — are constructed as inputs to the valuation stage. Alternative transition definitions, including entropy-based measures of membership dispersion, will be evaluated as robustness checks.
+
+In the \textbf{valuation stage}, a panel regression model is estimated with the change in log Transfermarkt market value between consecutive seasons as the dependent variable. The baseline specification includes age, playing time, position, and key performance statistics as controls, following \cite{poli2024statistical} and \cite{muller2017beyond}. Cluster membership transition measures are then introduced as additional regressors, and their coefficients are tested for statistical significance.
+
+Both fixed and random effects specifications are considered, with the choice guided by the Hausman test. Given that player-specific unobserved heterogeneity — such as unobserved talent, reputation, or injury history — is likely correlated with both cluster membership and market value, the Hausman test is expected to favour fixed effects. Standard errors are clustered at the player level to account for within-player serial correlation.
+
+Two important methodological limitations are acknowledged. First, since cluster memberships and transitions are estimated quantities derived from the first-stage clustering model rather than directly observed variables, their use as regressors introduces a generated regressor problem: standard errors in the valuation stage do not account for first-stage estimation uncertainty, which may lead to underestimation of true standard errors \cite{pagan1984econometric}. Bootstrapped standard errors that propagate uncertainty across both stages will be computed as a robustness measure. Second, since transitions are derived from the same performance variables included as controls in the regression, there is potential overlap that could introduce multicollinearity. The key distinction is that cluster membership vectors capture a nonlinear, multivariate latent summary of performance — the direction of movement in the performance space — rather than any individual statistic; nevertheless, robustness checks excluding performance controls will be conducted to isolate the independent contribution of cluster transitions.
+
+\chapter{Data}
+
+The empirical analysis relies on two primary data sources linked at the player level: FBref for performance statistics and Transfermarkt for market valuations.
+
+\textbf{Performance data} is sourced from FBref, which provides comprehensive season-level statistics for the Primeira Liga from at least 2017/18, yielding a panel of seven or more consecutive seasons. Available categories include standard metrics (goals, assists, shots), defensive actions (tackles, interceptions), passing statistics, possession metrics, and Opta-powered advanced metrics including xG and xA. The mixed-type variable set follows \cite{durso2022robust}: numerical output variables per 90 minutes, numerical success rate variables, and a categorical positional variable, enabling direct application of the FCMd-MD-NC model. Data collection will use the \texttt{soccerdata} Python library. Players with fewer than 200 minutes played per season and goalkeepers are excluded.
+
+\textbf{Market valuation data} is sourced from Transfermarkt, which records crowd-sourced market value estimates at approximately six-month intervals. These have been extensively validated as reliable proxies for actual transfer fees \cite{muller2017beyond, franceschi2024determinants}, though it is acknowledged that Transfermarkt valuations tend to underestimate high-value transfers and may lag actual market movements. This introduces a degree of classical measurement error in the dependent variable, which is expected to attenuate estimated coefficients toward zero, making any significant findings conservative rather than inflated. The end-of-season valuation is extracted for each player-season, and the primary dependent variable is the change in log market value between consecutive seasons.
+
+\textbf{Player ID matching} between FBref and Transfermarkt is implemented using community-maintained crosswalk tables from the \texttt{socceraction} ecosystem, which match players using a combination of name, nationality, and club identifiers. Based on comparable studies using these tools, an automatic match rate of approximately 80--90\% is expected, with the remainder resolved through manual verification. The matching procedure will be documented transparently, with the proportion of automatic and manually verified matches reported in the final thesis.
+
+\textbf{Expected sample size}: The Primeira Liga consists of 18 clubs, each carrying approximately 25 outfield players in a season squad. Applying the 200-minute playing time threshold, which typically retains around 60--70\% of registered players, yields approximately 270--320 eligible outfield player-season observations per season. Across seven seasons, the total panel is expected to comprise approximately 1,500--2,000 player-season observations. The number of unique players will be considerably smaller due to turnover, and the effective sample for the valuation stage — which requires at least two consecutive observations per player — will be somewhat reduced. These figures provide sufficient statistical power for the panel regression analysis, and a formal power analysis will be conducted once the dataset is assembled.
+
+The final dataset is structured as an unbalanced panel of player-season observations, which is expected and appropriate given that players enter and exit the Primeira Liga at different points across the study window.
+
+
+\chapter{Planning}
+
+The table below outlines the proposed timeline from proposal approval to the suggested submission deadline of 15 July 2026.
+
+\begin{table}[h]
+\centering
+\small
+\begin{tabular}{lll}
+\hline
+\textbf{Phase} & \textbf{Activity} & \textbf{Timeline} \\
+\hline
+Data collection & FBref and Transfermarkt extraction, cleaning, ID linking & April 2026 \\
+Clustering stage & FCMd-MD-NC implementation, label alignment, transitions & May 2026 \\
+Valuation stage & Panel regression, robustness checks, results & June 2026 \\
+Writing \& revision & Full write-up, supervisory feedback, final submission & Late June -- 15 July 2026 \\
+\hline
+\end{tabular}
+\caption{Proposed thesis timeline}
+\end{table}
+
+\bibliographystyle{apacite} 
+\bibliography{MyReferencesFile} % References are stored in MyReferencesFile.bib
+
+\appendix
+\chapter{Programming code}
+
+\end{document}

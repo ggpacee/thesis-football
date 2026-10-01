@@ -1,0 +1,49 @@
+panel 3,192 rows | crosswalk 1,446 | valuations 8,884
+crosswalk_reject.csv: removing 3 matches you rejected
+crosswalk rows sharing the same (player, born): 0
+Transfermarkt ids matched to MORE THAN ONE FBref (player, born) key: 15 ids / 30 keys
+  -> 1 ids = one person spelled differently in different seasons (unified)
+  -> 11 ids = different people (same season, or clearly different names): split; the weaker match loses its id
+       split  9819.0: ['Ricardo', 'Ricardo Costa']
+       split  83466.0: ['AndrÃ© Almeida', 'AndrÃ© Almeida Pinto']
+       split  139395.0: ['Ricardo', 'Ricardo Esgaio']
+       split  191217.0: ['HÃ©ctor', 'HÃ©ctor BellerÃ­n']
+       split  220722.0: ['Alan Eduardo Schons', 'Eduardo Teixeira']
+       split  249062.0: ['Julio Cesar', 'JÃºlio CÃ©sar']
+       split  319623.0: ['Pedro', 'Pedro Amaral']
+       split  439022.0: ['MarcÃ£o']
+       split  522714.0: ['Anderson']
+       split  525287.0: ['Carlos', 'Carlos VinÃ­cius']
+       split  574758.0: ['GarcÃ­a', 'Santiago GarcÃ­a']
+       unified 644158.0: ['Lucas', 'Lucas Silva']
+players: 1,500 name+birth keys -> 1,499 unified uids
+dropped 115 duplicate (tm_id, season) valuation rows
+
+FINAL: 3,192 player-seasons, 1,499 players
+        rows  has_tm_id  has_value
+season                            
+1718     384      0.961      0.958
+1819     384      0.953      0.943
+1920     405      0.951      0.914
+2021     394      0.952      0.947
+2122     395      0.962      0.959
+2223     415      0.954      0.954
+2324     406      0.951      0.943
+2425     409      0.946      0.939
+
+consecutive-season pairs (both seasons >= 200 league minutes): 1,433
+  of which with a valuation in both seasons (the regression sample): 1,364
+        pairs  with_delta
+season                   
+1718      215         206
+1819      197         185
+1920      212         202
+2021      209         199
+2122      204         198
+2223      210         199
+2324      186         175
+
+delta_log_mv: mean 0.070, sd 0.630, p1 -1.10, p99 2.04, share exactly 0: 14.4%
+pairs where the player changed club within the league: 22.1%
+
+Saved C:\Users\gonfp\Documents\University\Master's\Thesis\test soccerdata\test_outputs\panel\analysis_panel.csv

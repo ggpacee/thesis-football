@@ -1,0 +1,49 @@
+season,archetype,player,team_main,pos_raw,minutes
+1718,1,Alexandre Guedes,Aves,FW,1170
+1819,1,Bryan Róchez,Nacional,FW,1764
+1920,1,Tiquinho Soares,Porto,FW,1696
+2021,1,Beto,Portimonense,FW,1956
+2122,1,André Luis,Moreirense,"FW,MF",1332
+2223,1,Félix Correia,Marítimo,"FW,MF",757
+2324,1,Jason,Arouca,"FW,MF",2565
+2425,1,Orkun Kökçü,Benfica,MF,2633
+1718,2,Edu Machado,Boavista,DF,421
+1819,2,Jorge Correa,Marítimo,"FW,MF",2300
+1920,2,Rúben Dias,Benfica,DF,2970
+2021,2,Pedrão,Nacional,DF,2700
+2122,2,Abdul Mumin,Vit. Guimarães,DF,2224
+2223,2,Paulo Eduardo,Santa Clara,DF,481
+2324,2,Gonçalo Inácio,Sporting CP,DF,2482
+2425,2,Zé Pedro Figueiredo,Porto,DF,1497
+1718,3,Tomás Podstawski,Vitória Setúbal,MF,1836
+1819,3,Filipe Augusto,Rio Ave,MF,965
+1920,3,Rodrigo Battaglia,Sporting CP,MF,848
+2021,3,Claude Gonçalves,Gil Vicente FC,MF,2258
+2122,3,Sessi D'Almeida,Tondela,MF,218
+2223,3,Victor Bobsin,Santa Clara,MF,1610
+2324,3,João Moutinho,Braga,MF,2112
+2425,3,Diogo Calila,Santa Clara,"DF,MF",1750
+1718,4,Carlos Ponck,Aves,DF,2610
+1819,4,Ivanildo Fernandes,Moreirense,DF,1812
+1920,4,Tomás Ribeiro,B-SAD,DF,1170
+2021,4,Naoufel Khacef,Tondela,"DF,MF",793
+2122,4,Gaius Makouta,Boavista,MF,2520
+2223,4,Raphael Guzzo,Vizela,MF,2355
+2324,4,Leo Cordeiro,Estrela,MF,2607
+2425,4,Miguel Menino,Farense,MF,1830
+1718,5,Ewandro,Estoril,"FW,MF",954
+1819,5,Chiquinho,Moreirense,"FW,MF",2869
+1920,5,Kikas,B-SAD,FW,522
+2021,5,Heriberto Tavares,Famalicão,"FW,MF",742
+2122,5,Rui Costa,Santa Clara,"FW,MF",1966
+2223,5,Yago Cariello,Portimonense,FW,1372
+2324,5,Bruno Duarte,Farense,FW,2255
+2425,5,Václav Sejk,Famalicão,FW,858
+1718,6,André Sousa,Belenenses,MF,2162
+1819,6,Bruno Tabata,Portimonense,"FW,MF",2163
+1920,6,Silvestre Varela,B-SAD,"FW,MF",1567
+2021,6,Bruno Costa,Paços Ferreira,MF,2454
+2122,6,Hélder Ferreira,Paços Ferreira,"FW,MF",1572
+2223,6,Pedro Tiba,Gil Vicente FC,MF,1253
+2324,6,Ronaldo Tavares,Estrela,FW,1152
+2425,6,Pepê,Porto,"FW,MF",1991

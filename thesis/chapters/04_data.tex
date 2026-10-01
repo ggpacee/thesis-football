@@ -1,0 +1,112 @@
+\chapter{Data}
+\label{ch:data}
+
+The analysis combines two sources linked at the player level: performance statistics from FBref and market valuations from Transfermarkt, for the eight Primeira Liga seasons from 2017/18 to 2024/25. This chapter describes the sources, the construction of the sample, the variables, the link between the sources, and the measurement issues that matter for the interpretation of the results.
+
+\section{Sources and collection}
+\label{sec:data-sources}
+
+\paragraph{Performance data.} Season-level player statistics were collected from FBref with the Python library \texttt{soccerdata}. The Primeira Liga is not among the leagues that the library supports by default, so it was registered through the library's custom league configuration. Four statistical tables were collected for each season: standard statistics, shooting, playing time, and miscellaneous statistics. They were merged on season, club and player, which gives 4,463 club-level player-season rows for 2,008 distinct player names. A player who changed club during a season appears once for each club. FBref's advanced Opta-based statistics, such as expected goals, expected assists and progressive passes, are not available in the tables collected for the Primeira Liga over this period, and the tables do not contain passing accuracy, dribbling or duel statistics. The set of performance variables is therefore restricted to what is available: goals, assists, shots, shots on target, crosses, interceptions, tackles won, fouls committed and drawn, offsides, and playing time. The consequence is that archetypes are defined by attacking output, defensive actions and positions, and not by passing or ball-progression behaviour. This limitation is returned to in Chapter~\ref{ch:discussion}.
+
+\paragraph{Market values.} Transfermarkt provides, for every player, a history of market value estimates. The histories were obtained from the same data service that feeds the value chart on each player's page. To identify the players of each season, the squad lists of the 18 clubs of each of the eight seasons were collected from Transfermarkt, which gives a player identifier, a name and a birth year for every club-season. All requests were spread over time and all pages were stored locally, so that the collection can be reproduced without repeated queries.
+
+\section{Sample construction}
+\label{sec:data-sample}
+
+The unit of observation is a player-season. The sample is built in six steps, which are shown with their counts in Table~\ref{tab:sample-steps}.
+
+\begin{table}[ht]
+	\centering
+	\small
+	\caption{From the collected data to the analysis sample}
+	\label{tab:sample-steps}
+	\begin{tabular}{lr}
+		\toprule
+		Step & Rows or player-seasons \\
+		\midrule
+		Club-level rows collected from FBref & 4,463 \\
+		After removing rows of players who share a name with another player of the same club and season (22 rows, 4 groups) & 4,441 \\
+		One row per player and season (rows of players who changed club merged) & 4,364 \\
+		After removing one merged player-season with more than 3,100 minutes & 4,363 \\
+		After removing goalkeepers (354 player-seasons) & 4,009 \\
+		After removing player-seasons with fewer than 200 minutes (808) & 3,201 \\
+		After removing player-seasons with missing shooting or miscellaneous statistics (9) & 3,192 \\
+		\bottomrule
+	\end{tabular}
+\end{table}
+
+First, the four FBref tables are joined on season, club and name, and this join cannot separate two players with the same name at the same club in the same season: each of them is paired with each row of the other tables, so that counts and minutes are duplicated and mixed (one such pair of players appeared with 22,152 minutes, whereas a 34-match season has at most 3,060). The 22 rows concerned, of four such groups, cannot be repaired from the merged data and are removed. Second, the rows of players who played for more than one club in a season (77 player-seasons) are merged: counts are summed, and per-90-minute figures and rates are recomputed from the totals, not averaged. A merged player-season with more than 3,100 minutes, which can only arise when two different players with the same name and birth year at different clubs are merged, is removed. Third, goalkeepers are removed, because their performance is of a different nature and would dominate any clustering of outfield players, as in \citeA{akhanli2023clustering}. Fourth, player-seasons with fewer than 200 minutes are removed, following \citeA{durso2022robust}, because per-90-minute statistics based on little playing time are unreliable. Fifth, nine player-seasons, all in 2017/18, are removed because FBref has no shooting and miscellaneous statistics for them. The final sample has 3,192 player-seasons of 1,499 players, between 384 and 415 per season (Table~\ref{tab:sample}). Players appear in 2.1 seasons on average, and more than 800 of them in at least two.
+
+\begin{table}[ht]
+	\centering
+	\small
+	\caption{Sample by season}
+	\label{tab:sample}
+	\input{thesis_outputs/tables/sample_by_season.tex}
+	\par\smallskip
+	\parbox{0.9\textwidth}{\footnotesize\emph{Note.} Share with value is the share of player-seasons with a Transfermarkt value at the end of the season. Season pairs used are the pairs of consecutive seasons, starting in the season shown, for which the player qualifies in both seasons and has a value at both ends; they form the estimation sample of the valuation stage.}
+\end{table}
+
+\section{Variables}
+\label{sec:data-variables}
+
+The clustering uses three types of attributes, which follow the grouping of variables in \citeA{durso2022robust}. Table~\ref{tab:variables} lists them.
+
+\begin{table}[ht]
+	\centering
+	\small
+	\caption{Attributes used in the clustering}
+	\label{tab:variables}
+	\begin{tabular}{p{2.6cm}p{6.2cm}p{4.8cm}}
+		\toprule
+		Type & Variables & Dissimilarity \\
+		\midrule
+		Performance (10) & Non-penalty goals, assists, shots, shots on target, crosses, interceptions, tackles won, fouls committed, fouls drawn, offsides; all per 90 minutes & Manhattan distance on scaled variables \\
+		Success rates (2) & Shots on target per shot, non-penalty goals per shot (both shrunk, see text) & Manhattan distance on scaled variables \\
+		Position (3) & Indicators for defender, midfielder and forward; a player can hold several & Jaccard dissimilarity \\
+		\bottomrule
+	\end{tabular}
+\end{table}
+
+\paragraph{Per-90 statistics and scaling.} Counts are divided by the number of 90-minute periods played. All numerical variables are scaled by their average absolute deviation from the median, the standardisation used by \citeA{akhanli2023clustering}, which is less sensitive to the heavy right tail of count statistics than the standard deviation. The scaling constants are computed once on the pooled sample of all seasons and not season by season. This keeps the units the same in every season, which is what makes medoids of different seasons comparable when the archetypes are aligned (Section~\ref{sec:method-alignment}).
+
+\paragraph{Success rates.} A rate based on few attempts is very noisy: a player with one shot and one goal has a conversion rate of 100\%, and a player without shots has none. To prevent such cases from dominating, rates are shrunk towards the pooled rate,
+\begin{equation}
+	\tilde r_{it}=\frac{s_{it}+\kappa\,\bar r}{n_{it}+\kappa},
+\end{equation}
+where $s_{it}$ is the number of successes, $n_{it}$ the number of shots, $\bar r$ the pooled rate over all player-seasons, and $\kappa=10$ shots. A player without shots receives the pooled rate, which expresses that nothing is known, instead of a rate of zero. This is an empirical-Bayes type of shrinkage \cite{efron1975stein}. The rates computed from the raw counts are used in a robustness analysis (Chapter~\ref{ch:robustness}). Goals per shot on target is not used because it equals goals per shot divided by the shot-on-target rate and would count the same information twice.
+
+\paragraph{Positions.} FBref assigns each player up to three of the labels defender, midfielder and forward. For players with several clubs in a season the union of the labels is used. Five combinations account for almost all player-seasons (defender, midfielder, forward-midfielder, forward, defender-midfielder).
+
+Table~\ref{tab:summary} reports descriptive statistics. A typical player-season has about 1.3 shots, 0.11 non-penalty goals and 0.08 assists per 90 minutes, and the distributions are skewed to the right, as expected for count data.
+
+\begin{table}[ht]
+	\centering
+	\small
+	\caption{Descriptive statistics}
+	\label{tab:summary}
+	\resizebox{\textwidth}{!}{\input{thesis_outputs/tables/summary_statistics.tex}}
+	\par\smallskip
+	\parbox{0.95\textwidth}{\footnotesize\emph{Note.} Statistics of the clustering variables are in their original, unscaled form and refer to the 3,192 player-seasons. The change in log market value and the size of the membership shift refer to the season pairs of the estimation sample and are described in Chapter~\ref{ch:results}.}
+\end{table}
+
+\section{Linking the two sources}
+\label{sec:data-linking}
+
+FBref and Transfermarkt use different identifiers, so players have to be linked by name and birth year. The link is made \emph{within each season}, which keeps the pool of candidates small: for a player-season in FBref, the candidates are the players on the Transfermarkt squad lists of that season whose birth year differs by at most one year. A candidate is accepted if the similarity of the normalised names exceeds a threshold that depends on how informative the birth year is: 70 on a scale up to 100 when the birth years agree, 85 when they differ by one year, and 92 when a birth year is missing. A player is assigned the Transfermarkt identifier that is selected most often across his seasons. Of the 1,507 outfield players, 1,446 (96.0\%) could be linked, which corresponds to 96.2\% of the player-seasons; no player-season of the unlinked players has a value.
+
+The linking was checked in three ways, all of which are automatic except the last. First, 32 links with a name score below 92 were listed with the names, birth years and clubs on both sides and inspected manually. Most are nicknames or short forms of the same name at the same club (for example \emph{Oriol} and \emph{Uri} Rosell, or \emph{Álex} and \emph{Alejandro} Grimaldo). One link was rejected because it joined two different players with similar surnames; two others had already been removed in the next step. Second, fifteen Transfermarkt profiles had been linked to two different FBref spellings. In twelve of them both spellings appear in the sample. For eleven of these the two spellings occur in the same season or are clearly different names, which means that they are different players (a nickname such as \emph{Ricardo} and the full name \emph{Ricardo Esgaio}, for example), and the weaker link was discarded so that no player receives another player's values. In one case the spellings never occur in the same season, the names are similar and the birth years are within one year of each other, so the two spellings were treated as one player. After these steps, 1,500 name and birth-year combinations are 1,499 distinct players. Players without a link remain in the clustering sample but cannot enter the valuation stage.
+
+\section{Market values and the outcome}
+\label{sec:data-values}
+
+For each player and season, the value recorded closest to 1 June of the year in which the season ends is used, provided it lies within 120 days of that date; this approximates the end-of-season valuation. A value is available for 94.5\% of the player-seasons (between 91\% and 96\% depending on the season). The outcome of the valuation stage is the change in the logarithm of the value between the end of season $t$ and the end of season $t+1$,
+\begin{equation}
+	\Delta\ln V_{it}=\ln V_{i,t+1}-\ln V_{it}.
+\end{equation}
+It is observed only if the player qualifies (at least 200 minutes) in both seasons, so the transitions of players who leave the league, or who play too little, are not observed. There are 1,433 such pairs, and 1,364 of them have a value at both ends; three more are dropped because the team-level control is missing, which leaves 1,361 pairs of 697 players for the estimation. The mean change is $0.07$ (about 7\%) with a standard deviation of $0.63$; in about 14\% of the pairs the value is unchanged, and in about 22\% the player changed club within the league.
+
+\section{Measurement issues}
+\label{sec:data-measurement}
+
+Three features of the data affect the interpretation. First, market values are crowd estimates, updated at most every six to twelve months, and the crowd is thinner for players of smaller leagues \cite{muller2017beyond}. The outcome is therefore noisy and moves in steps, as the share of unchanged values illustrates. Noise in the dependent variable widens standard errors but does not by itself bias the coefficients. Second, the sample is selected: the transitions of players who leave the league are not observed, and the findings refer to players who stay. Third, memberships are estimated, and transitions are differences of estimated quantities; Section~\ref{sec:method-bootstrap} deals with the consequences for inference.

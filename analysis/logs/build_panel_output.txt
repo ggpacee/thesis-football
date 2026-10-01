@@ -1,0 +1,89 @@
+Loaded fbref_all_seasons.csv: 4,463 rows, 2,008 names
+Raw rows sharing season, club and name with another row: 22 rows in 4 groups -> EXCLUDED:
+ season           team          player  rows
+   1718       Boavista   Leonardo Ruiz     2
+   1718       MarÃ­timo Cristiano Gomes     2
+   1718       MarÃ­timo            Nanu     2
+   2425 Vit. GuimarÃ£es     JoÃ£o Mendes    16
+After merging multi-club rows: 4,364 player-seasons (77 had >1 club)
+Excluded 1 merged player-seasons with more than 3,100 minutes (different players, same name and birth year):
+ player   born season team_main  n_clubs  minutes
+Vitinha 2000.0   2122     Porto        2     3724
+Removed goalkeepers: 354
+Removed < 200 minutes: 808
+
+Rows with a MISSING model variable (dropped, 9 = 0.28% of the panel):
+                      player season       team_main  minutes pos_raw  shots_p90  crosses_p90  interceptions_p90  tackles_won_p90  fouled_p90  offsides_p90  sot_rate  g_sh
+               Rafael Furlan   1718          Chaves      479      DF        NaN          NaN                NaN              NaN         NaN           NaN       NaN   NaN
+              Duarte Valente   1718         Estoril      517      MF        NaN          NaN                NaN              NaN         NaN           NaN       NaN   NaN
+                 Koffi Kouao   1718      Moreirense      460      DF        NaN          NaN                NaN              NaN         NaN           NaN       NaN   NaN
+             Mateus da Silva   1718  PaÃ§os Ferreira      611      MF        NaN          NaN                NaN              NaN         NaN           NaN       NaN   NaN
+                Rafael Assis   1718  PaÃ§os Ferreira     1180      MF        NaN          NaN                NaN              NaN         NaN           NaN       NaN   NaN
+Rui Miguel Rodrigues Cardoso   1718         Tondela     2597      DF        NaN          NaN                NaN              NaN         NaN           NaN       NaN   NaN
+                    Raphinha   1718  Vit. GuimarÃ£es     2785      MF        NaN          NaN                NaN              NaN         NaN           NaN       NaN   NaN
+               Victor GarcÃ­a   1718  Vit. GuimarÃ£es     1125      MF        NaN          NaN                NaN              NaN         NaN           NaN       NaN   NaN
+                 Andre Sousa   1718 VitÃ³ria SetÃºbal      488                NaN          NaN                NaN              NaN         NaN           NaN       NaN   NaN
+pid+season duplicates (same name and birth year): 0
+
+FINAL: 3,192 player-seasons, 1,500 distinct players
+season
+1718    384
+1819    384
+1920    405
+2021    394
+2122    395
+2223    415
+2324    406
+2425    409
+
+Players seen in >=2 seasons: 812; consecutive-season pairs possible: see clustering step
+
+Position sets (top 8):
+pos_raw
+DF       932
+MF       923
+FW,MF    603
+FW       439
+DF,MF    289
+DF,FW      6
+
+Rows with no shots (rates set to 0): 79
+
+Missing values in model variables:
+npg_p90              0
+assists_p90          0
+shots_p90            0
+sot_p90              0
+crosses_p90          0
+interceptions_p90    0
+tackles_won_p90      0
+fouls_p90            0
+fouled_p90           0
+offsides_p90         0
+sot_rate             0
+g_sh                 0
+sot_rate_shr         0
+g_sh_shr             0
+age                  0
+team_ppm             2
+
+Scale table (average absolute deviation):
+group          variable   median      aad
+  ALL           npg_p90 0.052038 0.106311
+  ALL       assists_p90 0.038470 0.080741
+  ALL         shots_p90 0.967371 0.764096
+  ALL           sot_p90 0.276923 0.314229
+  ALL       crosses_p90 1.130657 1.482057
+  ALL interceptions_p90 0.958127 0.537138
+  ALL   tackles_won_p90 0.983101 0.446796
+  ALL         fouls_p90 1.498817 0.551033
+  ALL        fouled_p90 1.341865 0.711052
+  ALL      offsides_p90 0.082080 0.194334
+  ALL          sot_rate 0.303030 0.140814
+  ALL              g_sh 0.055556 0.070669
+  ALL      sot_rate_shr 0.323310 0.057225
+  ALL          g_sh_shr 0.077246 0.031563
+
+Largest minutes in the final panel: 3,060 (a 34-match season has at most 3,060)
+
+Saved to C:\Users\gonfp\Documents\University\Master's\Thesis\test soccerdata\test_outputs\panel
