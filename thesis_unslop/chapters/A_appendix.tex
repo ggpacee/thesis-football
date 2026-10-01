@@ -1,0 +1,53 @@
+\chapter{Estimated attribute weights}
+\label{app:weights}
+
+Table~\ref{tab:weights} reports the attribute weights that the estimation of \citeA{durso2022robust} produced for the 2023/24 season ($n=406$ players, $m=1.3$, $\rho=0.5$, ten random starts) in the four variants that were tried: distances scaled by their maximum, as in the original paper, or by their mean, with raw or shrunk success rates. This season was used to develop the model, and the other seasons were not examined in this way. The values were recomputed on the final panel and agree with those of the development runs to the third decimal.
+
+\begin{table}[ht]
+	\centering
+	\small
+	\caption{Estimated attribute weights, season 2023/24}
+	\label{tab:weights}
+	\begin{tabular}{llrrrrrrr}
+		\toprule
+		Scaling & Rates & $K$ & Performance & Success rates & Position & Noise & XB & Degenerate \\
+		\midrule
+		Max & Raw & 3 & 0.038 & 0.959 & 0.003 & 5.2\% & 0.21 & yes \\
+		Max & Raw & 4 & 0.031 & 0.967 & 0.002 & 4.7\% & 0.22 & yes \\
+		Max & Raw & 5 & 0.000 & 0.000 & 1.000 & 0.0\% & 0.00 & yes \\
+		Max & Shrunk & 3 & 0.312 & 0.601 & 0.088 & 34.0\% & 0.34 & no \\
+		Max & Shrunk & 4 & 0.238 & 0.704 & 0.059 & 21.4\% & 0.86 & no \\
+		Max & Shrunk & 5 & 0.000 & 0.000 & 1.000 & 0.0\% & 0.00 & yes \\
+		Mean & Raw & 3 & 0.151 & 0.742 & 0.107 & 6.2\% & 0.42 & no \\
+		Mean & Raw & 4 & 0.091 & 0.038 & 0.871 & 16.0\% & 0.08 & yes \\
+		Mean & Raw & 5 & 0.000 & 0.000 & 1.000 & 0.0\% & 0.00 & yes \\
+		Mean & Shrunk & 3 & 0.128 & 0.109 & 0.762 & 4.4\% & 0.14 & no \\
+		Mean & Shrunk & 4 & 0.052 & 0.044 & 0.905 & 0.0\% & 0.05 & yes \\
+		Mean & Shrunk & 5 & 0.053 & 0.046 & 0.901 & 0.0\% & 6.53 & yes \\
+		\bottomrule
+	\end{tabular}
+	\par\smallskip
+	\parbox{0.95\textwidth}{\footnotesize\emph{Note.} Weights sum to one. Noise is the share of players whose largest membership is in the noise cluster and XB the Xie--Beni index. A solution is called degenerate if one attribute group has a weight above 0.8, if the Xie--Beni index is below $10^{-6}$, or if more than half of the players are in the noise cluster. A weight of one on the positions with a noise share of zero is the case in which the clusters reproduce the position labels exactly. With the maximum, the two success rates dominate; with the mean, positions dominate. The weights used in the thesis are fixed at 0.501, 0.224 and 0.275 (Section~\ref{sec:method-model}).}
+\end{table}
+
+\chapter{Coefficient tables}
+\label{app:coef}
+
+Tables~\ref{tab:coef-core13} and~\ref{tab:coef-full13} report all coefficients of the extended models for the main configuration, with cluster-robust standard errors (by player) that treat the memberships as observed. Statistics are in the scaled form of Section~\ref{sec:data-variables}, in units of their average absolute deviation. The numbering of the archetypes is inherited from the first season and differs between runs. In the main configuration ($m=1.3$) archetype 1 is the defenders (the reference), 2 the strikers, 3 the wide attackers and 4 the central midfielders.
+
+\begin{table}[ht]
+	\centering
+	\footnotesize
+	\caption{Core baseline with membership changes, $m=1.3$ (main configuration)}
+	\label{tab:coef-core13}
+	\input{thesis_outputs/tables/coef_core_m1.3.tex}
+\end{table}
+
+\begin{table}[ht]
+	\centering
+	\scriptsize
+	\caption{Full baseline with membership changes, $m=1.3$ (main configuration)}
+	\label{tab:coef-full13}
+	\input{thesis_outputs/tables/coef_full_m1.3.tex}
+\end{table}
+
